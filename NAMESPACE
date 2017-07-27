@@ -2,6 +2,7 @@
 
 export(amt_denos)
 export(amt_teri)
+export(cablib)
 export(cabone)
 export(sim_denos)
 export(sim_teri)

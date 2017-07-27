@@ -2,6 +2,10 @@
 loc <- "/Users/kyleb/git/metrumresearchgroup/cabone/inst"
 camodel <- "cabone"
 
+##' Get the locaton of model source code.
+##' 
+##' @export
+cablib <- function() system.file(package="cabone")
 
 
 ##' Load calcium / bone model.
@@ -10,7 +14,7 @@ camodel <- "cabone"
 ##' 
 ##' @export
 cabone <- function(...) {
-  update(mread_cache(camodel,loc),...)
+  update(mread_cache(camodel,cablib()),...)
 }
 
 
