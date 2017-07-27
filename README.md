@@ -1,6 +1,8 @@
 Calcium Bone Model
 ==================
 
+-   Documentation [here](inst/vignettes/modeldoc.Rmd)
+
 ``` r
 library(cabone)
 ```
