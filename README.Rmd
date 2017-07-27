@@ -14,7 +14,7 @@ knitr::opts_chunk$set(fig.path="inst/img/README-", comment='.', message=FALSE)
 
 # Calcium Bone Model
 
-- Documentation [here](inst/vignettes/modeldoc.Rmd)
+- Documentation [here](vignettes/modeldoc.Rmd)
 
 
 ```{r,message=FALSE, warning=FALSE}
