@@ -1,0 +1,37 @@
+---
+title: ""
+author: ""
+date: ""
+output: 
+  md_document:
+    variant: markdown_github
+---
+
+```{r,echo=FALSE,message=FALSE}
+knitr::opts_chunk$set(fig.path="inst/img/README-", comment='.', message=FALSE)
+```
+
+
+# Calcium Bone Model
+
+```{r,message=FALSE, warning=FALSE}
+library(cabone)
+```
+
+
+## Simulate teriparatide data
+
+```{r}
+out <- sim_teri(dose=c(20,40), dur=9)
+
+plot(out)
+```
+
+## Simulate denosumab data
+
+```{r}
+out <- sim_denos(dose=c(10,60,210), dur=6)
+
+plot(out, log(DENCP) + BMDlsDENchange~time)
+```
+

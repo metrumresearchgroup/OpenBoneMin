@@ -1,0 +1,5 @@
+Rchecks
+Makefile
+test.R
+^.*\.Rproj$
+^\.Rproj\.user$
