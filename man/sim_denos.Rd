@@ -10,6 +10,8 @@ sim_denos(dose = 60, ii = 6, dur = 3, delta = 4,
 \arguments{
 \item{dose}{denosumab dose in micrograms}
 
+\item{ii}{dosing interval in months}
+
 \item{dur}{number of doses to simulate}
 
 \item{delta}{simulation time grid in hours}

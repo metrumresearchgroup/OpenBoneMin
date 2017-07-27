@@ -8,10 +8,10 @@ camodel <- "cabone"
 cablib <- function() system.file(package="cabone")
 
 
-##' Load calcium / bone model.
+##' Calcium / bone homeostatis model.
+##' 
 ##' 
 ##' @param ... passed to update
-##' 
 ##' @export
 cabone <- function(...) {
   update(mread_cache(camodel,cablib()),...)
@@ -55,7 +55,7 @@ sim_teri <- function(dose=20, ii=24, dur=27, delta=0.1, request="PTHpm,CaC") {
 ##' Simulate with denosumab dosing
 ##' 
 ##' @param dose denosumab dose in micrograms
-##' @parma ii dosing interval in months
+##' @param ii dosing interval in months
 ##' @param dur number of doses to simulate
 ##' @param delta simulation time grid in hours
 ##' @param request outputs to request

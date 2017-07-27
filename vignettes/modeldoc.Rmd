@@ -1,0 +1,62 @@
+---
+title: "CaBone Model Documentation"
+author: "Metrum Research Group, LLC"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+# Model compartments
+
+- `AHO`
+- `B`
+- `BCL2`
+- `BMDfn`
+- `BMDlsDEN`
+- `CREB`
+- `DENCENT`
+- `DENPER`
+- `DENSC`
+- `ECCPhos`
+- `EST`
+- `GFR`
+- `HAp`
+- `IntraPO`
+- `L`
+- `M`
+- `N`
+- `O`
+- `OBfast`
+- `OBslow`
+- `OC`
+- `P`
+- `PhosGut`
+- `PKCENT`
+- `PKPER`
+- `PKPER2`
+- `PTH`
+- `PTmax`
+- `Q`
+- `Qbone`
+- `R`
+- `RNK`
+- `ROB1`
+- `RX2`
+- `S`
+- `SC`
+- `T`
+- `TERICENT`
+- `TERISC`
+- `TGFB`
+- `TGFBact`
+- `UCA`
+
+
+
+
+
+

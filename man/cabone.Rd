@@ -2,7 +2,7 @@
 % Please edit documentation in R/cabone.R
 \name{cabone}
 \alias{cabone}
-\title{Load calcium / bone model.}
+\title{Calcium / bone homeostatis model.}
 \usage{
 cabone(...)
 }
@@ -10,5 +10,5 @@ cabone(...)
 \item{...}{passed to update}
 }
 \description{
-Load calcium / bone model.
+Calcium / bone homeostatis model.
 }
