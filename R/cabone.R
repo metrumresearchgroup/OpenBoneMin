@@ -18,6 +18,16 @@ cabone <- function(...) {
 }
 
 
+##' @rdname cabone
+##' @export
+cabone_export <- function(file=NULL, overwrite=FALSE) {
+  if(is.null(file)) stop("please provide a file name to write model code", call.=FALSE)
+  if(!grepl(".*\\.cpp$",file)) stop("file must end in '.cpp'",call.=FALSE)
+  file <- normalizePath(file,mustWork=FALSE)
+  if(file.exists(file)) stop("output file already exists")
+  mod <- mread(camodel,cablib(),compile=FALSE)
+  return(mod@code)
+}
 
 ##' Convert teriparatide doses
 ##' 

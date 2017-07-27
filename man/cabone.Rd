@@ -2,9 +2,12 @@
 % Please edit documentation in R/cabone.R
 \name{cabone}
 \alias{cabone}
+\alias{cabone_export}
 \title{Calcium / bone homeostatis model.}
 \usage{
 cabone(...)
+
+cabone_export(file = NULL, overwrite = FALSE)
 }
 \arguments{
 \item{...}{passed to update}
