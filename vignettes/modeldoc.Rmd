@@ -12,48 +12,48 @@ vignette: >
 
 # Model compartments
 
-- `AHO`
-- `B`
-- `BCL2`
-- `BMDfn`
-- `BMDlsDEN`
-- `CREB`
-- `DENCENT`
-- `DENPER`
-- `DENSC`
-- `ECCPhos`
-- `EST`
-- `GFR`
-- `HAp`
-- `IntraPO`
-- `L`
-- `M`
-- `N`
-- `O`
-- `OBfast`
-- `OBslow`
-- `OC`
-- `P`
-- `PhosGut`
-- `PKCENT`
-- `PKPER`
-- `PKPER2`
-- `PTH`
-- `PTmax`
-- `Q`
-- `Qbone`
-- `R`
-- `RNK`
-- `ROB1`
-- `RX2`
-- `S`
-- `SC`
-- `T`
-- `TERICENT`
-- `TERISC`
-- `TGFB`
-- `TGFBact`
-- `UCA`
+- `AOH`
+- `B` - circulating calcitriol (pmol)
+- `BCL2`- Bcl-2
+- `BMDfn` - femoral neck bone mineral density
+- `BMDlsDEN` - lumbar spine bone mineral density
+- `CREB` - CREB
+- `DENCENT` - denosumab PK central compartment
+- `DENPER` - denosumab PK peripheral compartment
+- `DENSC` - denosumab subcutaneous dosing compartment
+- `ECCPhos` - extracellular phosphate (mmol)
+- `EST` - estrogen
+- `GFR` - glomerular filtration rate, value holder
+- `HAp` - hydroxyapatite
+- `IntraPO` - intracellular phosphate (mmol)
+- `L` - RANK ligand
+- `M` - RANK-RANKL complex
+- `N` - OPG-RANKL
+- `O` - OPG
+- `OBfast` - osteoblasts, fast
+- `OBslow` - osteoblasts, slow
+- `OC` - osteoclasts
+- `P` - extracellular calcium (mmol)
+- `PhosGut` - oral phosphate (mmol)
+- `PKCENT` - general PK central compartment
+- `PKPER` - general PK peripheral compartment
+- `PKPER2` - general PK second peripheral compartment
+- `PTH` - circulating PTH (`pmol`)
+- `PTmax` - PT glan maximum capacity
+- `Q` - bone calcium, immediately exchangeable (mmol)
+- `Qbone` - bone calcium , non-immediately exchangeable (mmol)
+- `R` - calcitriol dependent Ca2+ absorption
+- `RNK` - RANK
+- `ROB1` - responding osteoblasts
+- `RX2` - RunX2
+- `S` - PTH gland pool (.)
+- `SC` - subcutaneous PTH compartment (pmol)
+- `T` - oral calcium (mmol)
+- `TERICENT` - teriparatide central compartment
+- `TERISC` - teriparatide subcutaneous dosing compartment (pmol)
+- `TGFB` - latent TGF beta
+- `TGFBact` - active TGF beta
+- `UCA` - calcium in the urine (pmol)
 
 
 
