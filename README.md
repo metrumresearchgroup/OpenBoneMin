@@ -32,6 +32,8 @@ plot(out, log(DENCP) + BMDlsDENchange~time)
 Simulate secondary hyperparathyroidism
 ======================================
 
+Have `GFR` decline by a certain amount (`GFRdelta`) over a certail period of time (`GFRtau`).
+
 ``` r
 sim_2h() %>% plot
 ```
@@ -44,6 +46,8 @@ Some helper functions
 Convert `teriparatide` doses
 ----------------------------
 
+Usually, we think of doses in micrograms. This function turns those doses into `pmol`.
+
 ``` r
 amt_teri(20)
 ```
@@ -52,6 +56,8 @@ amt_teri(20)
 
 Export the model code
 ---------------------
+
+It's a little hard to see what's happening here. But basically, this grabs the model code and writes it to a file of your choosing. Use this when you want to export the model and start making changes yourself.
 
 ``` r
 file <- file.path(tempdir(),"my_model.cpp")

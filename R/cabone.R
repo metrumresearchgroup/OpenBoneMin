@@ -1,5 +1,4 @@
 
-loc <- "/Users/kyleb/git/metrumresearchgroup/cabone/inst"
 camodel <- "cabone"
 
 ##' Get the locaton of model source code.
