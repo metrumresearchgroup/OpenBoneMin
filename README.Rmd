@@ -14,9 +14,15 @@ knitr::opts_chunk$set(fig.path="inst/img/README-", comment='.', message=FALSE)
 
 # Calcium Bone Model
 
+## Documentation
 - Documentation [here](vignettes/modeldoc.Rmd)
 
+## Installation
+```{r,eval=FALSE}
+remotes::install_github("metrumresearchgroup/cabone")
+```
 
+## Usage
 ```{r,message=FALSE, warning=FALSE}
 library(cabone)
 ```
