@@ -95,16 +95,30 @@ sim_denos <- function(dose=60, ii=6, dur=3, delta=4,
 ##' @param request outputs to request
 ##' 
 ##' @export
-sim_2h <- function(GFRdelta = 84, GFRtau = 10, delta=24, request="GFR,CaC,PTHpm,OC") {
+sim_2h <- function(GFRdelta = 84, GFRtau = 10, delta=24, 
+                   request="GFR,CaC,PTHpm,OC,ECCPhos",cfb=TRUE) {
   if(GFRtau <= 0 ) stop("GFRtau must be greater than zero.", call.=FALSE)
   mod <- cabone()
   ini <- as.list(init(mod))
   if(GFRdelta <= 0 | GFRdelta >= ini$GFR*16.66666667) {
     stop("GFRdelta out of bounds.", call.=FALSE) 
   }
-  mod %>%
+  out <- 
+    mod %>%
     param(GFRdelta = GFRdelta, GFRtau = GFRtau) %>%
     mrgsim(end=24*7*52*GFRtau, delta=delta, Req=request,tscale=1/(24*7*52))
+  
+  if(!cfb) return(out)
+  
+  base <- dplyr::slice(out,1)
+  vars <- c(out@request,out@outnames)
+  base <- as.list(base[,vars])
+  data <- as.data.frame(out)
+  for(i in seq_along(vars)) {
+    data[,vars[i]] <- data[,vars[i]]/base[[vars[i]]]
+  }
+  out@data <- data
+  out
 }
 
 
