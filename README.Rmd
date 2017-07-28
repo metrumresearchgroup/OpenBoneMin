@@ -44,3 +44,20 @@ plot(out, log(DENCP) + BMDlsDENchange~time)
 sim_2h() %>% plot
 ```
 
+
+# Some helper functions
+
+## Convert `teriparatide` doses
+
+```{r}
+amt_teri(20)
+```
+
+## Export the model code
+
+```{r}
+file <- file.path(tempdir(),"my_model.cpp")
+file_location <- cabone_export(file)
+```
+
+

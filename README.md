@@ -37,3 +37,23 @@ sim_2h() %>% plot
 ```
 
 ![](inst/img/README-unnamed-chunk-5-1.png)
+
+Some helper functions
+=====================
+
+Convert `teriparatide` doses
+----------------------------
+
+``` r
+amt_teri(20)
+```
+
+    . [1] 4856.962
+
+Export the model code
+---------------------
+
+``` r
+file <- file.path(tempdir(),"my_model.cpp")
+file_location <- cabone_export(file)
+```
