@@ -7,7 +7,7 @@
 \usage{
 cabone(...)
 
-cabone_export(file = NULL, overwrite = FALSE)
+cabone_export(file = tempfile(fileext = ".cpp"), overwrite = FALSE)
 }
 \arguments{
 \item{...}{passed to update}

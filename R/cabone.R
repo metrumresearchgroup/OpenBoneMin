@@ -20,13 +20,15 @@ cabone <- function(...) {
 
 ##' @rdname cabone
 ##' @export
-cabone_export <- function(file=NULL, overwrite=FALSE) {
-  if(is.null(file)) stop("please provide a file name to write model code", call.=FALSE)
+cabone_export <- function(file=tempfile(fileext=".cpp"), overwrite=FALSE) {
+  if(is.null(file)) stop("please provide a file name to write model code.", call.=FALSE)
   if(!grepl(".*\\.cpp$",file)) stop("file must end in '.cpp'",call.=FALSE)
   file <- normalizePath(file,mustWork=FALSE)
-  if(file.exists(file)) stop("output file already exists")
+  if(file.exists(file) & !overwrite) stop("output file already exists.", call.=FALSE)
   mod <- mread(camodel,cablib(),compile=FALSE)
-  return(mod@code)
+  message("Writing model code to file ", file)
+  writeLines(mod@code,file)
+  return(file)
 }
 
 ##' Convert teriparatide doses
@@ -84,6 +86,25 @@ sim_denos <- function(dose=60, ii=6, dur=3, delta=4,
          Req=request)
 }
 
-
+##' Simulate secondary hyperparathyroidism
+##' 
+##' @param GFRdelta change in GFR from baseline value
+##' @param GFRtau time interval in years over which GFR changes 
+##' @param dur number of doses to simulate
+##' @param delta simulation time grid in hours
+##' @param request outputs to request
+##' 
+##' @export
+sim_2h <- function(GFRdelta = 84, GFRtau = 10, delta=24, request="GFR,CaC,PTHpm,OC") {
+  if(GFRtau <= 0 ) stop("GFRtau must be greater than zero.", call.=FALSE)
+  mod <- cabone()
+  ini <- as.list(init(mod))
+  if(GFRdelta <= 0 | GFRdelta >= ini$GFR*16.66666667) {
+    stop("GFRdelta out of bounds.", call.=FALSE) 
+  }
+  mod %>%
+    param(GFRdelta = GFRdelta, GFRtau = GFRtau) %>%
+    mrgsim(end=24*7*52*GFRtau, delta=delta, Req=request,tscale=1/(24*7*52))
+}
 
 

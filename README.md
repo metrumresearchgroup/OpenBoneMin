@@ -28,3 +28,12 @@ plot(out, log(DENCP) + BMDlsDENchange~time)
 ```
 
 ![](inst/img/README-unnamed-chunk-4-1.png)
+
+Simulate secondary hyperparathyroidism
+======================================
+
+``` r
+sim_2h() %>% plot
+```
+
+![](inst/img/README-unnamed-chunk-5-1.png)

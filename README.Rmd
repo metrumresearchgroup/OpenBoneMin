@@ -38,3 +38,9 @@ out <- sim_denos(dose=c(10,60,210), dur=6)
 plot(out, log(DENCP) + BMDlsDENchange~time)
 ```
 
+# Simulate secondary hyperparathyroidism
+
+```{r}
+sim_2h() %>% plot
+```
+
