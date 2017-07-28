@@ -5,7 +5,7 @@
 \title{Simulate secondary hyperparathyroidism}
 \usage{
 sim_2h(GFRdelta = 84, GFRtau = 10, delta = 24,
-  request = "GFR,CaC,PTHpm,OC", cfb = TRUE)
+  request = "GFR,CaC,PTHpm,OC,ECCPhos", cfb = TRUE)
 }
 \arguments{
 \item{GFRdelta}{change in GFR from baseline value}

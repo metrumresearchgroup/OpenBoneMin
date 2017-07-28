@@ -63,6 +63,23 @@ sim_teri <- function(dose=20, ii=24, dur=27, delta=0.1, request="PTHpm,CaC") {
   mrgsim(mod, data=data, delta=delta, end=(dur+1)*ii, Req=request)
 }
 
+
+##' Simulate with scler dosing
+##' 
+##' @param dose teriparatide dose in micrograms
+##' @param ii dosing interval in hours
+##' @param dur number of doses to simulate
+##' @param delta simulation time grid
+##' @param request outputs to request
+##' 
+##' @export
+sim_scler <- function(dose=20, ii=24, dur=27, delta=0.1, request="PTHpm,CaC") {
+  mod <- cabone()
+  cmtn <- mrgsolve::cmtn(mod,"TERISC")
+  data <- expand.ev(amt=amt_teri(dose), ii=ii, addl=dur, cmt=cmtn)
+  mrgsim(mod, data=data, delta=delta, end=(dur+1)*ii, Req=request)
+}
+
 ##' Simulate with denosumab dosing
 ##' 
 ##' @param dose denosumab dose in micrograms
