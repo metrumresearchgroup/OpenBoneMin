@@ -1,5 +1,5 @@
 
-camodel <- "cabone"
+camodel <- "cabone2"
 
 ##' Get the locaton of model source code.
 ##' 
@@ -46,10 +46,18 @@ amt_teri <- function(x) x*1E6/4117.8
 ##' @export
 amt_denos <- function(x) x*1
 
+##' Convert sclerostin doses
+##' 
+##' @param x sclerostin dose in milligrams
+##' 
+##' @return sclerostin dose in nmol
+##' @export
+amt_scler <- function(x) x/0.145 
+
 
 ##' Simulate with teriparatide dosing
 ##' 
-##' @param dose teriparatide dose in micrograms
+##' @param dose teriparatide dose in milligrams
 ##' @param ii dosing interval in hours
 ##' @param dur number of doses to simulate
 ##' @param delta simulation time grid
@@ -64,19 +72,20 @@ sim_teri <- function(dose=20, ii=24, dur=27, delta=0.1, request="PTHpm,CaC") {
 }
 
 
-##' Simulate with scler dosing
+##' Simulate with sclerostin dosing
 ##' 
-##' @param dose teriparatide dose in micrograms
-##' @param ii dosing interval in hours
+##' @param dose sclerostin dose in milligrams
+##' @param ii dosing interval in months
 ##' @param dur number of doses to simulate
 ##' @param delta simulation time grid
 ##' @param request outputs to request
+##' @param tscale factor for rescaling time in simulated output
 ##' 
 ##' @export
-sim_scler <- function(dose=20, ii=24, dur=27, delta=0.1, request="PTHpm,CaC") {
-  mod <- cabone()
-  cmtn <- mrgsolve::cmtn(mod,"TERISC")
-  data <- expand.ev(amt=amt_teri(dose), ii=ii, addl=dur, cmt=cmtn)
+sim_scler <- function(dose=210, ii=1*24*28, dur=12, delta=24*28, 
+                      request="SOSTCP, lsBMDsimSCLER, OBchange") {
+  cmtn <- mrgsolve::cmtn(mod,"SOSTSC")
+  data <- expand.ev(amt=amt_scler(dose), ii=ii, addl=dur, cmt=cmtn)
   mrgsim(mod, data=data, delta=delta, end=(dur+1)*ii, Req=request)
 }
 

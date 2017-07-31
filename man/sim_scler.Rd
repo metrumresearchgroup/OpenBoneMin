@@ -2,22 +2,24 @@
 % Please edit documentation in R/cabone.R
 \name{sim_scler}
 \alias{sim_scler}
-\title{Simulate with scler dosing}
+\title{Simulate with sclerostin dosing}
 \usage{
-sim_scler(dose = 20, ii = 24, dur = 27, delta = 0.1,
-  request = "PTHpm,CaC")
+sim_scler(dose = 210, ii = 1 * 24 * 28, dur = 12, delta = 24 * 28,
+  request = "SOSTCP, lsBMDsimSCLER, OBchange")
 }
 \arguments{
-\item{dose}{teriparatide dose in micrograms}
+\item{dose}{sclerostin dose in milligrams}
 
-\item{ii}{dosing interval in hours}
+\item{ii}{dosing interval in months}
 
 \item{dur}{number of doses to simulate}
 
 \item{delta}{simulation time grid}
 
 \item{request}{outputs to request}
+
+\item{tscale}{factor for rescaling time in simulated output}
 }
 \description{
-Simulate with scler dosing
+Simulate with sclerostin dosing
 }

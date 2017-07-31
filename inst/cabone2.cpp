@@ -75,61 +75,6 @@
 
  // sclerostin (nmol/L) and sclerostin ab concentration (nmol) 
 #define SOSTCP (SOSTCENT/SOSTVC)
-
-// Parameter Declaration
-   
- double E0PicOBkb;
- double EmaxPicOBkb; 
- double EC50PicOBparenKb ;
- double EC50PicOBkb ;
- double PicOBkb;
- double E0RUNX2kbEff;  
- double PicOBkbEff ;
- double kbprime ;
- double kbslow ;
- double kbfast ;
- double RUNkbMax;
- double INparen ;
- double RUNkb50;
- double RUNX2kbPrimeEff ;
- double KIN_P; 
- double SCLEREFF;
- double BSAP;
- double E0PicROB;
- double EC50PicROBparen;
- double EC50PicROB; 
- double Dr;
- double PicROB;
- double ROBin; 
- double bigDb;
- double koutOCY;
- double kin_TOL;
- double PhosEffect;
- double J48;
- double J27;
- double RUNX2;
- double KPT;
- double kin_T;
- double kin_BMDdel;
- double kin_BMDdelTERI; 
- double kin_BMDdelTERIth; 
- double SCLER_TOL;
- double SC50;
- double SCLEREFF_TOL;
- double EC50SCLER;
- double PTHEFFECT;
- double fracOBEffect;
- double DV;
- double Hazard;
- double Survival;
- double lsBMD;
- double SclerBMDpred;
- double DenoBMDpred;
- double TeriBMDpred;
- double ComboBMDpred;
- double damp;
- double drug;
- 
  
  [MAIN]
  TGFB_0 = Pic0*1000;
@@ -139,9 +84,10 @@
  M_0 = k3*RNK_0*L_0/k4;
  N_0 = k1*O_0*L_0/k2;
  AOH_0 = B_0/10;
- F_SOSTSC = SCLERF;
+ F_DENSC = DENF*1E6;
  F_TERISC = TERIF;
- F_DENSC = DENF;
+ F_SOSTSC = SCLERF;
+
  
 
 // PARAMETER VALUES 
@@ -284,14 +230,14 @@
   E2scalePicB1 = 0.0000116832
   FracOBE = 20
   
-  // Denosumab Params from Peterson, et al.The AAPS Journal, 24(6 Abstract W4340), 2004 ##
+  // Denosumab Params from Peterson, et al.The AAPS Journal, 24(6 Abstract W4340), 2004 //
   DENVMAX = 3110, DENKM = 188, DENVC = 2340
-  DENVP = 1324  ## = Q/K(12,11) 
+  DENVP = 1324  // = Q/K(12,11) 
   DENCL = 2.75
-  DENQ = 18.67 ## = K(12,11) * VC 
+  DENQ = 18.67 // = K(12,11) * VC 
   DENKA = 0.00592, DENF = 0.729
   
-////DENVMAX = 3660,  ## Estimates pulled from Berkeley Model  
+////DENVMAX = 3660,  // Estimates pulled from Berkeley Model  
 ////DENKM = 164,  
 //#DENVC = 2380,  
 //#DENVP = 1870,  
@@ -304,17 +250,17 @@
   
   ESTON = 0
   koutEST=0.05776227
-  menoDUR=as.hour(as.year(1.66))
+  menoDUR=8736*1.66//as.hour(as.year(1.66))
   ageGAM = -2.3
   age50 = 0.64
-  ageENTER = as.hour(as.year(41))
-  ageDONE = as.hour(as.year(51))
-  tgfbGAM = 0.0374 ## updated 6/20/12 KTB
+  ageENTER = 8736*41//as.hour(as.year(41))
+  ageDONE = 8736*51//as.hour(as.year(51))
+  tgfbGAM = 0.0374 // updated 6/20/12 KTB
   tgfbactGAM = 0.045273
   robGAM = 0.16
   obGAM = 0.000012
   maxTmESTkid = 0.923737
-  GFRtau=10 ## years over which GFR declines
+  GFRtau=10 // years over which GFR declines
   GFRdelta=0
 
   // Sclerostin Piece //
@@ -509,458 +455,459 @@ $INIT
 //                 "BMDfn","BMDls","BMDlsDEN","EST","GFR"
 //                 )
 
-
+  double PhosEffect = 0;
+  double J48 = 0;
+  double J27 = 0;
+  double RUNX2 = 0;
+  double kinEST = 0;
 
   // parameters derived from SS initial conditions 
-  double T13 = (CaDay/24)/Q0;
-
+    double T13 = (CaDay/24)/Q0;
+  
   double T15 = CaDay/(CaConc0*V1*24);
-
+  
   double J14OC50= exp(log((J14OCmax*pow(OC0,J14OCgam)/T13) - pow(OC0,J14OCgam))/J14OCgam);
-
+  
   double OCeqn = (J14OCmax*pow(Osteoclast,J14OCgam))/(pow(Osteoclast,J14OCgam) + pow(J14OC50,J14OCgam));
-
+  
   double kinRNK = (koutRNK*RNK0 + k3*RNK0*L0 - k4*M0) / pow(TGFBact0,kinRNKgam) ;
-
+  
   double MOCratio = M/Osteoclast;
-
+  
   double MOCratio0 = M0/OC0;
-
+  
   double MOCratioEff = pow((MOCratio/MOCratio0), MOCratioGam);
-
+  
   double J14OCdepend = OCeqn*Q0*FracJ14*MOCratioEff;
-
+  
   double J14 = T13*Q0*(1-FracJ14) + J14OCdepend;
-
-
+  
+  
   // 0.464, reported as the molar ratio of P / Ca in hydroxyapatite. 
   double J41 = 0.464*J14;
-
-  bigDb = (kb*OB0*Pic0/ROB10);
-
-  double kinTGF = koutTGF0*TGFB0;
-
-  double koutTGF = koutTGF0*(pow((TGFB/TGFB0),koutTGFGam));
-
-  double koutTGFact = koutTGF0*1000;
-
-  double koutTGFeqn = koutTGF*TGFB*(pow((Osteoclast/OC0), OCtgfGAM));
-
-  E0PicROB = (FracPicROB*Pic0);
-
-  EC50PicROBparen = (EmaxPicROB*pow(TGFBact0,PicROBgam) / (Pic0 - E0PicROB)) - pow(TGFBact0,PicROBgam);
-
-  EC50PicROB = (exp(log(EC50PicROBparen)/PicROBgam));
-
-  Dr = (kb*OB0/Pic0) ;
-
-  PicROB = (E0PicROB + EmaxPicROB*pow(TGFBact,PicROBgam)/(pow(TGFBact,PicROBgam) + pow(EC50PicROB,PicROBgam)));
-
-  ROBin = (Dr*PicROB);
   
-  SC50 = (SMAX - 1);
-
+  double bigDb = (kb*OB0*Pic0/ROB10);
+  
+  double kinTGF = koutTGF0*TGFB0;
+  
+  double koutTGF = koutTGF0*(pow((TGFB/TGFB0),koutTGFGam));
+  
+  double koutTGFact = koutTGF0*1000;
+  
+  double koutTGFeqn = koutTGF*TGFB*(pow((Osteoclast/OC0), OCtgfGAM));
+  
+  double E0PicROB = (FracPicROB*Pic0);
+  
+  double EC50PicROBparen = (EmaxPicROB*pow(TGFBact0,PicROBgam) / (Pic0 - E0PicROB)) - pow(TGFBact0,PicROBgam);
+  
+  double EC50PicROB = (exp(log(EC50PicROBparen)/PicROBgam));
+  
+  double Dr = (kb*OB0/Pic0) ;
+  
+  double PicROB = (E0PicROB + EmaxPicROB*pow(TGFBact,PicROBgam)/(pow(TGFBact,PicROBgam) + pow(EC50PicROB,PicROBgam)));
+  
+  double ROBin = (Dr*PicROB);
+  
+  double SC50 = (SMAX - 1);
+  
   double E0PicOB = FracPicOB*Pic0;
-
+  
   double EC50PicOBparen = (EmaxPicOB*pow(TGFBact0,PicOBgam)/(Pic0 - E0PicOB)) - pow(TGFBact0,PicOBgam);
-
+  
   double EC50PicOB = exp(log(EC50PicOBparen)/PicOBgam);
-
+  
   double PicOB = E0PicOB + EmaxPicOB*pow(TGFBact,PicOBgam) / (pow(TGFBact,PicOBgam) + pow(EC50PicOB,PicOBgam));
-
-  KPT = (bigDb/PicOB);
-
+  
+  double KPT = (bigDb/PicOB);
+  
   double EC50MeffOC = exp(log(pow(M0, kinOCgam)*EmaxMeffOC/(1-E0Meff) - pow(M0, kinOCgam))/kinOCgam);
-
+  
   double MeffOC = E0Meff + (EmaxMeffOC * pow(M, kinOCgam)/(pow(M, kinOCgam) + pow(EC50MeffOC,kinOCgam)));
-
+  
   double kinOC2 = Da*PicOCkin*MeffOC*OC0;
-
+  
   double E0PicOC = FracPicOC*Pic0;
-
+  
   double EC50PicOCparen = (EmaxPicOC*pow(TGFBact0, PicOCgam)/(Pic0 - E0PicOC)) - pow(TGFBact0, PicOCgam);
-
+  
   double EC50PicOC = exp(log(EC50PicOCparen)/PicOCgam);
-
+  
   double PicOC = E0PicOC + ((EmaxPicOC*pow(TGFBact, PicOCgam))/(pow(TGFBact, PicOCgam) + pow(EC50PicOC, PicOCgam)));
-
+  
   double PiL0 = (k3/k4)*L0;
-
+  
   double PiL = M/10;
-
+  
   double EC50survInPar = (E0RANKL - EmaxL)*(pow(PiL0, LsurvOCgam)/(E0RANKL - 1)) - pow(PiL0, LsurvOCgam);
-
+  
   double EC50surv = exp(log(EC50survInPar)/LsurvOCgam);
-
+  
   double LsurvOC = E0RANKL - (E0RANKL - EmaxL)*(pow(PiL, LsurvOCgam)/(pow(PiL, LsurvOCgam) + pow(EC50surv, LsurvOCgam)));
-
+  
   double KLSoc = Da*PicOC*LsurvOC;
-
+  
   double T66 = (pow(T67, AlphOHgam) + pow(PTHconc0, AlphOHgam) )/pow(PTHconc0, AlphOHgam) ;
-
+  
   double k15a = k14a*Qbone0/Q0 ;
-
+  
   double J14a = k14a*Qbone;
-
+  
   double J15a = k15a*Q ;
-
+  
   // Hydroxy-apatite 
   double kLShap = 1/HApMRT;
-
+  
   double kHApIn = kLShap/OB0;
-
+  
   // Calcium flux from plasma into bone 
   double J15 = (T15*P*(1-FracJ15) + T15*P*FracJ15*HAp);
-
+  
   // 0.464, reported as the molar ratio of P / Ca in hydroxyapatite. 
   double J42 = 0.464*J15;
-
-  double kinLbase = koutL*L0;
-  fracOBEffect = FracOBE/TOL ;         //   /TOL 20 #5 #4.5 #2 #5.8 #14 #25 
   
-     double OsteoEffect = pow((Osteoblast/OB0), (TotOsteoEffectGam/fracOBEffect)) ; 
+  double kinLbase = koutL*L0;
+  
+  double fracOBEffect = FracOBE/TOL ;         //   /TOL 20 #5 #4.5 #2 #5.8 #14 #25 
+  
+  double OsteoEffect = pow((Osteoblast/OB0), (TotOsteoEffectGam/fracOBEffect)) ; 
   
   double OsteoCYEffect = pow((OCY/OCY0), (TotOsteoEffectGam*(1-(1/fracOBEffect)))) ; 
-
+  
   double PTH50 = EmaxLpth*PTHconc0 - PTHconc0 ;
-
+  
   double LpthEff = EmaxLpth*(PTHconc) / ((PTH50*pow((OsteoCYEffect*OsteoEffect),TESTPOWER)) + (PTHconc)) ;
- 
+  
   double kinL = kinLbase*(OsteoCYEffect)*(OsteoEffect)*LpthEff;
-
+  
   double pObase = kO*O0;
-
+  
   double pO = pObase*(D/ROB10)*((PTHconc+(opgPTH50*(D/ROB10)))/(2*PTHconc))+ IO;
-
+  
   double RX2Kin = RX2Kout0*RX20;
-
+  
   double EC50PTHRX2x = ((EmaxPTHRX2x*PTHconc0)/(RX2Kout0 - E0rx2Kout)) - PTHconc0;
-
+  
   double RX2Kout = E0rx2Kout + EmaxPTHRX2x*PTHconc/(PTHconc+EC50PTHRX2x);
-
-
+  
+  
   //
   // START CREB-RELATED EQUATIONS                        
   //
   double EC50PTHcreb = ((EmaxPTHcreb*PTHconc0)/(1-E0crebKin)) -  PTHconc0;
-
+  
   double crebKin0= crebKout*CREB0;
-
+  
   double crebKin = crebKin0* (E0crebKin + EmaxPTHcreb*PTHconc/(PTHconc+EC50PTHcreb));
-
+  
   double bcl2Kin = RX2*CREB*bcl2Kout;
   //
-
+  
   //
   // START PHOS-RELATED EQUATIONS                        
   //
-
+  
   // QUESTION:
-//     Is 1.2 just the initial extracellular phosphate concentration?
-//     16.8 mmol /14 L = 1.2 mM
-
+  //     Is 1.2 just the initial extracellular phosphate concentration?
+  //     16.8 mmol /14 L = 1.2 mM
+  
   // C2 is extracellular phosphate concentration 
   double PO4inhPTH = pow((C2/1.2),PO4inhPTHgam);
-
+  
   double PhosEffTop = (PhosEff0 - 1)*( pow(1.2, PhosEffGam) + pow(PhosEff50, PhosEffGam) );
-
+  
   double PhosEffBot =PhosEff0 * pow(1.2, PhosEffGam);
-
+  
   double PhosEffMax =  PhosEffTop / PhosEffBot;
-
+  
   double PhosEff = PhosEff0 - (PhosEffMax*PhosEff0 * pow(C2, PhosEffGam) /(pow(C2, PhosEffGam)  + pow(PhosEff50, PhosEffGam)));
-
+  
+  double PhosEffect;
   if (C2 > 1.2) PhosEffect = PhosEff ; else PhosEffect = 1;
-
+  
   double T68 = T66*pow(PTHconc, AlphOHgam)/(pow(T67, AlphOHgam)*PO4inhPTH+pow(PTHconc, AlphOHgam)) ;
-
+  
   double SE = T65*T68*PhosEffect;
-
+  
   // Equations relating to calcitriol-dependent calcium absorption 
   double T36 = T33 + (T34-T33)*(pow(C8,CaPOgam)/(pow(T35,CaPOgam)+ pow(C8,CaPOgam)));
   double T37 = T34 - (T34-T33)*(pow(C8,CaPOgam)/(pow(T35,CaPOgam)+ pow(C8,CaPOgam)));
-
+  
   // ======================================
-//     RENAL CALCIUM HANDLING
-//     ======================================
-//     Calcium filtration rate in kidney ;
-//     We assume that 50% of filtered calcium is reabsorbed in a PTH-independent manner;
-//     ... and 50% is reabsorbed in a PTH-dependent manner
-//     Fraction unbound assumed to be 0.6
+  //     RENAL CALCIUM HANDLING
+  //     ======================================
+  //     Calcium filtration rate in kidney ;
+  //     We assume that 50% of filtered calcium is reabsorbed in a PTH-independent manner;
+  //     ... and 50% is reabsorbed in a PTH-dependent manner
+  //     Fraction unbound assumed to be 0.6
   
   double CaFilt = 0.6*0.5*GFR*CaConc;
-
+  
   // Maximum calcium reabsorption in the kidney - PTH sensitive
   double mtmEST = (1-maxTmESTkid)/(1-0.1);  //(1-maxEST)/(1-minEST)
   double tmEST = 1 - mtmEST + mtmEST*EST;
-
+  
   double ReabsMax = tmEST * (0.3*GFR*CaConc0 - 0.149997)*(Reabs50 + CaConc0) / CaConc0;
-
+  
   // Effect of PTH on calcium reabsorption 
   double T17 = PTHconc0*T16 - PTHconc0;
-
+  
   double ReabsPTHeff = (T16*PTHconc)/(PTHconc + T17);
-
+  
   // PTH-sensitive calcium reabsorption in kidney 
   // Reabs50 = 1.573 = H(4-u)-delta 
   double CaReabsActive =  (ReabsMax*C1/(Reabs50 + C1))*ReabsPTHeff;
-
+  
   double T20 = CaFilt - CaReabsActive;
-
+  
   double T10 = T7*C8/(C8+T9);
-
+  
   // Temporary calcium excretion rate 
   double J27a = (2-T10)*T20;
-
+  
   // J27 will be the flux of calcium out of the plasma via the kidney 
   if (J27a<0)  J27 = 0 ; else  J27 = J27a;
-
+  
   double ScaEff = pow( (CaConc0/CaConc), ScaEffGam);
-
+  
   double T72 = 90 * ScaEff;
-
+  
   double T73 = T71 * (C8 - T72);
-
+  
   double T74 = (exp(T73) - exp(-T73)) / (exp(T73) + exp(-T73));
-
+  
   double T75 = T70 * (0.85 * (1 + T74) + 0.15) ;
-
+  
   double T76 = T70 * (0.85 * (1 - T74) + 0.15);
-
+  
   // phosphate renal excretion 
   double T47 = T46*0.88*GFR;
-
+  
   double J48a = 0.88*GFR*C2 - T47;
-
+  
   if (J48a < 0) J48 = 0 ; else J48 = J48a;
-
+  
   // phosphate oral absorption 
   double J53 = T52*PhosGut;
-
+  
   double J54 = T49*C2;
-
+  
   double J56 = T55*IntraPO;
   
-    // Parameters describing TGF-beta effects on Osteoblast and clast differentiation and apoptosis 
-  E0PicOBkb = MultPicOBkb*Pic0; 
-
-  EmaxPicOBkb = FracPic0kb*Pic0;
-
-  EC50PicOBparenKb = ((E0PicOBkb - EmaxPicOBkb)*pow(TGFBact0,PicOBgamkb)) / (E0PicOBkb - Pic0)  - pow(TGFBact0,PicOBgamkb);
-
-  EC50PicOBkb = exp(log(EC50PicOBparenKb)/PicOBgamkb);
-
-  PicOBkb = E0PicOBkb - (E0PicOBkb  - EmaxPicOBkb)*pow(TGFBact,PicOBgamkb) / (pow(TGFBact,PicOBgamkb) + pow(EC50PicOBkb,PicOBgamkb));
- 
- // MMR 01-Mar-2012 adding estrogen effect that propogates through to OB apoptosis 
- 
- E0RUNX2kbEff =(E0RUNX2kbEffFACT*kb);
+  // Parameters describing TGF-beta effects on Osteoblast and clast differentiation and apoptosis 
+  double E0PicOBkb = MultPicOBkb*Pic0; 
   
- PicOBkbEff = (PicOBkb/Pic0)*(1/(pow(EST,E2scalePicB1))) ;
- 
- kbprime =  (E0RUNX2kbEff*PicOBkbEff - RUNX2kbPrimeEff);
- kbslow = (kbprime*Frackb);
- kbfast = ((kb*OB0 + kbslow*OBfast0 - kbslow*OB0) / OBfast0 );
-
-
-
+  double EmaxPicOBkb = FracPic0kb*Pic0;
+  
+  double EC50PicOBparenKb = ((E0PicOBkb - EmaxPicOBkb)*pow(TGFBact0,PicOBgamkb)) / (E0PicOBkb - Pic0)  - pow(TGFBact0,PicOBgamkb);
+  
+  double EC50PicOBkb = exp(log(EC50PicOBparenKb)/PicOBgamkb);
+  
+  double PicOBkb = E0PicOBkb - (E0PicOBkb  - EmaxPicOBkb)*pow(TGFBact,PicOBgamkb) / (pow(TGFBact,PicOBgamkb) + pow(EC50PicOBkb,PicOBgamkb));
+  
+  // MMR 01-Mar-2012 adding estrogen effect that propogates through to OB apoptosis 
+  
+  double E0RUNX2kbEff =(E0RUNX2kbEffFACT*kb);
+  
+  double PicOBkbEff = (PicOBkb/Pic0)*(1/(pow(EST,E2scalePicB1))) ;
+  
+  double kbprime =  (E0RUNX2kbEff*PicOBkbEff - RUNX2kbPrimeEff);
+  double kbslow = (kbprime*Frackb);
+  double kbfast = ((kb*OB0 + kbslow*OBfast0 - kbslow*OB0) / OBfast0 );
+  
+  
+  
   // Parameters describing osteoblast apoptosis as affected by PTH (continuous vs intermitent) 
- // 4/14/15 change this to only function when TERI or exogenous PTH is dosed  
-
-  if (BCL2 > 105)  RUNX2 = BCL2 - 90 ; else  RUNX2 = 10;
-
-  RUNkbMax = E0RUNX2kbEff*RUNkbMaxFact;
-
-  INparen = (RUNkbMax * pow(RUNX20,RUNkbGAM)) / (E0RUNX2kbEff - kb) - pow(RUNX20,RUNkbGAM);
-
-  RUNkb50 = exp(log(INparen)/RUNkbGAM);
-
-  RUNX2kbPrimeEff = RUNkbMax*pow(RUNX2,RUNkbGAM) / (pow(RUNX2,RUNkbGAM) + pow(RUNkb50,RUNkbGAM));
-
-
+  // 4/14/15 change this to only function when TERI or exogenous PTH is dosed  
+  
+  if (BCL2 > 105) RUNX2 = BCL2 - 90 ; else RUNX2 = 10;
+  
+  double RUNkbMax = E0RUNX2kbEff*RUNkbMaxFact;
+  
+  double INparen = (RUNkbMax * pow(RUNX20,RUNkbGAM)) / (E0RUNX2kbEff - kb) - pow(RUNX20,RUNkbGAM);
+  
+  double RUNkb50 = exp(log(INparen)/RUNkbGAM);
+  
+  double RUNX2kbPrimeEff = RUNkbMax*pow(RUNX2,RUNkbGAM) / (pow(RUNX2,RUNkbGAM) + pow(RUNkb50,RUNkbGAM));
+  
+  
   // Sclerostin Effect - prop to OCY apoptosis rate 
-  SCLEREFF = ((SCLER/SCLER_0));
-  PTHEFFECT = (pow(PTH/PTH_0,20)); 
+  double SCLEREFF = ((SCLER/SCLER_0));
+  double PTHEFFECT = (pow(PTH/PTH_0,20)); 
   
-  SCLEREFF_TOL= (SCLER/SCLER_0);
- SCLER_TOL = (SMAX*SCLEREFF_TOL/(SC50 + SCLEREFF_TOL));
+  double SCLEREFF_TOL= (SCLER/SCLER_0);
+  double SCLER_TOL = (SMAX*SCLEREFF_TOL/(SC50 + SCLEREFF_TOL));
   
-  kin_TOL = kout_TOL;
+  double kin_TOL = 1 * kout_TOL;
   
   dxdt_TOL = kin_TOL*(SCLER_TOL) - kout_TOL*TOL;
- 
- // koutOCY = (OB0*FracOCY)*(pow((TOL),4.2)); 
- 
-  //koutOCY = (OB0*FracOCY)*(pow((SCLEREFF),gammaOCY)); 
-  koutOCY = (OB0*FracOCY)*(pow((SCLEREFF),gammaOCY));
+  
+  double koutOCY = (OB0*FracOCY)*(pow((SCLEREFF),gammaOCY));
   
   double Frackb2 = kbfast/kbprime;
-
+  
   //
   // Equations relating to calcium movement to/from the gut 
   //
   double T29 = (T28*T0 - T310*T0)/T310;
-
+  
   double T31 = T28*T/(T+T29);
-
+  
   // R is calcitriol-dependent gut Ca2+ absorption 
   double T83 = R/0.5;
-
+  
   // J40 = calcium flux from gut to plasma 
   double J40 = T31*T*T83/(T + T81) + T87*T;
-
+  
   // T85 relates to extent of absorption of orally-administered dose 
-
+  
   double T85Rpart = pow(R, T80)/(pow(R,T80) + pow(T81,T80));
   double T85 = T77*T85Rpart;
-
+  
   //
   // Calcitriol equations     
   //
   double INparenCtriol =((CtriolMax - CtriolMin) * pow(Calcitriol0, CtriolPTgam)) / (CtriolMax - 1)- pow(Calcitriol0,CtriolPTgam);
-
+  
   double Ctriol50 = exp(log(INparenCtriol) / CtriolPTgam) ;
-
+  
   double CtriolPTeff = CtriolMax - (CtriolMax - CtriolMin) * pow(C8, CtriolPTgam) / (pow(C8, CtriolPTgam) + pow(Ctriol50, CtriolPTgam));
-
+  
   double PTin = PTout * CtriolPTeff;
-
+  
   double FCTD = (S / 0.5) * PTmax;
-
+  
   //  Not used with precursor pool model 
   double INparenCa =(T58 - T61) * pow(CaConc0, T59) / (T58 - 385) - pow(CaConc0, T59);
   double T60 = exp(log(INparenCa) / T59) ;
   double T63 =  T58 - (T58 - T61) * pow((CaConc), T59) / (pow((CaConc), T59) + pow(T60, T59));
-
+  
   // Comment out precursor pool 
   // double EMAXCA = pow(CaConc,CAGAM)/(pow(CaConc,CAGAM)+pow(CAEC50,CAGAM)); 
-
+  
   // Zero-order precursor production rate 
-   //  double PPTHR0 = PREPTH0*PPTHKS + PTH0*kout; 
-
+  //  double PPTHR0 = PREPTH0*PPTHKS + PTH0*kout; 
+  
   // PTH production rate from precursor 
   double EPTH = T63*FCTD;// PPTHKIN*PREPTH*(1-EMAXCA)*FCTD; 
-
+  
   // Infused and subcutaneously administered PTH 
   double IPTH= 0.693*SC + IPTHinf;
-
+  
   // Total PTH input rate 
   double SPTH = EPTH + IPTH;
-
+  
   // Teriparatide pk 
   double TERIPKIN = TERISC*TERICL/TERIVC;
-
+  
   // Plasma PTH (pmol)
-//     SPTH = PTH input rate
-//     kout = PTH first order elimination rate
-//     TERIPKIN = first order rate from tpar subq dosing into plasma
+  //     SPTH = PTH input rate
+  //     kout = PTH first order elimination rate
+  //     TERIPKIN = first order rate from tpar subq dosing into plasma
   
   dxdt_PTH = SPTH - kout*PTH + TERIPKIN;
-
-//  if(DEN_TERI_COMBO==1) dxdt_RX2 = 0; 
-   
-
+  
+  //  if(DEN_TERI_COMBO==1) dxdt_RX2 = 0; 
+  
+  
   // PTH precursor pool 
   // dxdt_PREPTH =  PPTHR0 - PPTHKS*PREPTH - EPTH; 
-
+  
   dxdt_S = (1 - S) * T76 - (S* T75);
-
+  
   // PT gland max capacity 
   dxdt_PTmax = PTin - PTout * PTmax;
-
+  
   dxdt_B = AOH - T69 * B;
-
+  
   // Subcutaneous PTH administration 
   // NOT USED... use TERISC instead 
   dxdt_SC = IPTHint - 0.693*SC;
-
+  
   dxdt_AOH = SE - T64*AOH ;
-
+  
   // J14 = nu(12-4) calcium flux from bone into plasma
-//     J15 = nu(4-12) calcium flux from plasma into bone
-//     J27 = nu(4-u)  calcium flux from plasma to urine
-//     J40 = nu(1-4)  calcium flux from gut to plasma
+  //     J15 = nu(4-12) calcium flux from plasma into bone
+  //     J27 = nu(4-u)  calcium flux from plasma to urine
+  //     J40 = nu(1-4)  calcium flux from gut to plasma
   
   dxdt_P = J14 - J15- J27 + J40;
-
+  
   // Extracelluar phosphate (mmol) 
   dxdt_ECCPhos = J41  - J42 - J48 + J53 - J54 + J56;
-
+  
   // Oral calcium 
   // CMT: T  UNITS: mmol 
   // J40 --> flux from gut to plasma 
   // F11 == T85 by definition 
   dxdt_T = OralCa*T85 - J40;
-
+  
   // Calcitriol-dependent Ca2+ absorption 
   // CMT: R 
   dxdt_R = T36*(1- R) - T37*R;
-
-    // Hydroxyapatite 
+  
+  // Hydroxyapatite 
   dxdt_HAp = kHApIn*Osteoblast - kLShap*HAp;
-
+  
   //
   // Estrogen piece
   //
-
+  
   double AGE = ageENTER + T_0;
-
-  double kinEST=0 ;
-
+  
   double ageONSET = ageDONE-menoDUR;
-
+  
   if(AGE < ageONSET) kinEST = koutEST * pow((AGE/ageENTER),ageGAM);
-
+  
   if(AGE >= ageONSET) kinEST = koutEST * pow((AGE/ageENTER),ageGAM) * (1 - age50 * (pow((AGE-ageONSET),2)/(pow((menoDUR/2),2) + pow((AGE-ageONSET),2))));
-
+  
   dxdt_EST = (kinEST - koutEST * EST)*ESTON;
-
+  
   //dxdt_E2FRAC= 0;
-
+  
   // Osteoblasts were considered to exist as two populations: fast and slow.
-//     Fast and slow refer to removal rates (kbfast, kbslow); input assumed to
-//     be the same for each.  Total osteoblasts = OBfast + OBslow 
+  //     Fast and slow refer to removal rates (kbfast, kbslow); input assumed to
+  //     be the same for each.  Total osteoblasts = OBfast + OBslow 
   //Estrogen effect added: E2dosePicB1 --> PicOBkbEff --> kbprime --> kbslow, kbfast and Frackb2
   dxdt_OBfast = (bigDb/PicOB)*D*FracOBfast*Frackb2  - kbfast*OBfast; // 
-
+  
   dxdt_OBslow = (bigDb/PicOB)*D*(1-FracOBfast)*Frackb - kbslow*OBslow;
   
   // translation compartment to delay SCLER effect on OB 
   
-  kin_T = kout_T;
+  double kin_T = kout_T;
   
-  EC50SCLER =  (exp(log(EMAXSCLER-1)/SCLEROBgam));
+  double EC50SCLER =  (exp(log(EMAXSCLER-1)/SCLEROBgam));
   
   dxdt_trans = kin_T*(EMAXSCLER*pow(SCLEREFF,SCLEROBgam)/(pow(EC50SCLER,SCLEROBgam)+pow(SCLEREFF,SCLEROBgam))) - kout_T*trans;
- 
+  
   //P1NPdum = ((2050 * pow((BSAPdum), 1.8) / ((pow(467, 1.8) + pow((BSAPdum),1.8))))-20); 
-
+  
   // d/dt(extracellular phosphate) = J41 -  J42 - J48 + J53 - J54 + J56
-//     d/dt(intracellular phosphate) = J54  -  J56
-//
-//     The exchange fluxes of PO4 between ECF and bone (J41 and J42)
-//     set same as respective Ca fluxes but multiplied by the stoichiometric
-//     factor of 0.464, reported as the molar ratio of P / Ca in hydroxyapatite.
-//
-//     d/dt(dietary phosphate) = OralPhos*F12 -J53
-//     Influx set ~ 1 g (10.5 mmol) of PO4 daily.
-//     Bioavailability assumed = 0.7
+  //     d/dt(intracellular phosphate) = J54  -  J56
+  //
+  //     The exchange fluxes of PO4 between ECF and bone (J41 and J42)
+  //     set same as respective Ca fluxes but multiplied by the stoichiometric
+  //     factor of 0.464, reported as the molar ratio of P / Ca in hydroxyapatite.
+  //
+  //     d/dt(dietary phosphate) = OralPhos*F12 -J53
+  //     Influx set ~ 1 g (10.5 mmol) of PO4 daily.
+  //     Bioavailability assumed = 0.7
   
   dxdt_PhosGut = OralPhos *F12 - J53;
-
+  
   dxdt_IntraPO = J54 - J56;
-
+  
   // OC: Active Osteoclasts 
   dxdt_OC = kinOC2 - KLSoc*OC;
-
+  
   // D = ROB1; Responding Osteoblasts 
   dxdt_ROB1 = ROBin * pow(1/EST,robGAM) - pow((SCLEREFF),gammaDr)*KPT*ROB1 ;
-
+  
   // Latent TGF-beta pool, production dependent on osteoblast function 
   dxdt_TGFB = kinTGF*(pow((Osteoblast/OB0),OBtgfGAM)) * pow(1/EST,tgfbGAM) - koutTGFeqn * pow(EST,tgfbactGAM);
-
+  
   // active TGF-beta pool, production dependent on osteoclast function
-   //  koutTGFeqn = koutTGF*TGFB*(pow((Osteoclast/OC0), OCtgfGAM))
+  //  koutTGFeqn = koutTGF*TGFB*(pow((Osteoclast/OC0), OCtgfGAM))
   
   dxdt_TGFBact = koutTGFeqn * pow(EST,tgfbactGAM) - koutTGFact*TGFBact;
   
@@ -968,305 +915,301 @@ $INIT
   // in amt is some fraction of osteoblasts leaving the system 
   
   dxdt_OCY = OB*FracOCY*OCY0 - koutOCY*OCY;
- 
- 
- //
+  
+  
+  //
   // BMD BONE MINERAL DENSITY 
   //
-    // Solve for kinBMD based on OC=OC0, OB=OB0, and BMD=BMD0 
-
-    //Lumbar spine
-    double kinBMDls =  koutBMDls*BMDls0;
-
-    dxdt_BMDls = kinBMDls * pow(OB/OB0,gamOB) - koutBMDls * pow(OC/OC0,gamOCls) * BMDls;
-
-    //Lumbar spine with DENOSUMAB
-    double kinBMDlsDEN =  koutBMDlsDEN*BMDlsDEN0;
-
-    dxdt_BMDlsDEN = kinBMDlsDEN * pow(OB/OB0,gamOB) - koutBMDlsDEN * pow(OC/OC0,gamOClsDEN) * BMDlsDEN;
-
-    //Femoral neck
-    double baseBMDfn = baseBMDfnBAS; // (1+baseBMDfnETH*ETHN)*(1+baseBMDfnBMI*(BMI-27));
-    double gamOCfn = gamOCfnBAS;     // (1+gamOCfnETH*ETHN)*(1+gamOCfnBMI*(BMI-27)); 
-    double koutBMDfn = koutBMDfnBAS; // (1+koutBMDfnETH*ETHN)*(1+koutBMDfnBMI*(BMI-27));
-
-    double kinBMDfn =  koutBMDfn*BMDfn0;
-
-    dxdt_BMDfn = kinBMDfn * pow(OB/OB0,gamOB) - koutBMDfn * pow(OC/OC0,gamOCfn) * BMDfn;
-    
-    //Femoral neck with DENOSUMAB
+  // Solve for kinBMD based on OC=OC0, OB=OB0, and BMD=BMD0 
   
-    double kinBMDfnDEN =  koutBMDfnDEN*BMDfnDEN0;
-    
-    dxdt_BMDfnDEN = kinBMDfnDEN * pow(OB/OB0,gamOB) - koutBMDfnDEN * pow(OC/OC0,gamOCfnDEN) * BMDfnDEN;
-    
-    
-    //Total hip with DENOSUMAB
-    
-    double kinBMDthDEN =  koutBMDthDEN*BMDthDEN0;
-    
-    dxdt_BMDthDEN = kinBMDthDEN * pow(OB/OB0,gamOB) - koutBMDthDEN * pow(OC/OC0,gamOCthDEN) * BMDthDEN;
-    
-
-  // BMD for anabolic therapies 
- 
-  // SCLEROSTIN    
- 
-  
-    //Lumbar spine
-    
-     double kinBMDlsSCLER =  koutBMDSCLER*BMDlsSCLER0;
-     
-     kin_BMDdel = kout_BMDdel;
-     
-     dxdt_delBMDls = kin_BMDdel * pow(OB/OB0,gamOBSCLERls) - kout_BMDdel*delBMDls;
-
-      dxdt_BMDlsSCLER = kinBMDlsSCLER * delBMDls - koutBMDSCLER * pow(OC/OC0,gamOCSCLER) * BMDlsSCLER;
-    
-    //Femoral neck
-    
-     double kinBMDfnSCLER =  koutBMDSCLER*BMDfnSCLER0;
-     
-     dxdt_delBMDfn = kin_BMDdel* pow(OB/OB0,gamOBSCLERfn) - kout_BMDdel*delBMDfn;
-     
-     dxdt_BMDfnSCLER = kinBMDfnSCLER * delBMDfn  - pow(OC/OC0,gamOCSCLER) * koutBMDSCLER * BMDfnSCLER;
-     
-    //Total hip
-    
-    double kinBMDthSCLER =  koutBMDSCLER*BMDthSCLER0;
-   
-
-     dxdt_delBMDth = kin_BMDdel * pow(OB/OB0,gamOBSCLERth) - kout_BMDdel*delBMDth;
-     
-     dxdt_BMDthSCLER = kinBMDthSCLER * delBMDth - koutBMDSCLER * pow(OC/OC0,gamOCSCLER) * BMDthSCLER;
-     
-     // 
-//     TERIPARATIDE      
-
   //Lumbar spine
-
-
-
-    double kinBMDlsTERI =  koutBMDlsTERI*BMDlsTERI0;
-    
-    kin_BMDdelTERI = kout_BMDdelTERI;
-    
-    dxdt_delBMDlsTERI = kin_BMDdelTERI * pow(OB/OB0,gamOBTERIls) - kout_BMDdelTERI*delBMDlsTERI;
-    
-    dxdt_BMDlsTERI = kinBMDlsTERI * delBMDlsTERI - koutBMDlsTERI * pow(OC/OC0,gamOClsTERI) * BMDlsTERI;
-    
-    //Femoral neck
-    
-    double kinBMDfnTERI =  koutBMDfnTERI*BMDfnTERI0;
-    
-    kin_BMDdelTERI = kout_BMDdelTERI;
-    
-    dxdt_delBMDfnTERI = kin_BMDdelTERI* pow(OB/OB0,gamOBTERIfn) - kout_BMDdelTERI*delBMDfnTERI;
-    
-    dxdt_BMDfnTERI = kinBMDfnTERI * delBMDfnTERI  - pow(OC/OC0,gamOCfnTERI) * koutBMDfnTERI * BMDfnTERI;
-
-    //Total hip
-
-    double kinBMDthTERI =  koutBMDthTERI*BMDthTERI0;
-    
-    //  kin_BMDdelTERIth = kout_BMDdelTERI*thTERIfactor; not used //
-    
-    dxdt_delBMDthTERI = kin_BMDdelTERI* pow(OB/OB0,gamOBTERIth) - kout_BMDdelTERI*delBMDthTERI;
-    
-    dxdt_BMDthTERI = kinBMDthTERI * delBMDthTERI  - pow(OC/OC0,gamOCthTERI) * koutBMDthTERI * BMDthTERI;
-    
-
-  // BMD with combination therapy /
-
-    // DEN/TERI  
-    double kinBMDlsCOMBO = koutBMDlsCOMBO;
-    
-    dxdt_BMDlsCOMBO = 0;
-    if(DEN_TERI_COMBO==1) dxdt_BMDlsCOMBO = kinBMDlsCOMBO * pow(OB/OB0,gamOB) - koutBMDlsCOMBO* pow(OC/OC0,gamOClsDEN_TERI)*BMDlsCOMBO;
-    
-    double kinBMDthCOMBO = koutBMDthCOMBO;
-    dxdt_BMDthCOMBO = 0;
-    if(DEN_TERI_COMBO==1) dxdt_BMDthCOMBO = kinBMDthCOMBO * pow(OB/OB0,gamOB) - koutBMDthCOMBO* pow(OC/OC0,gamOCthDEN_TERI)*BMDthCOMBO;
-    
-    double kinBMDfnCOMBO = koutBMDfnCOMBO;
-    dxdt_BMDfnCOMBO = 0;
-    if(DEN_TERI_COMBO==1) dxdt_BMDfnCOMBO = kinBMDfnCOMBO * pow(OB/OB0,gamOB) - koutBMDfnCOMBO* pow(OC/OC0,gamOCfnDEN_TERI)*BMDfnCOMBO;
-    
-    
-    // FRACTURE PROBABILITY 
-    //
-    // BMDhat = 0.8 g/cm^2 
-    // postMenoAgehat = 20 y 
-    // BMIhat = 27.1 kg/m^2 
-    //req dataset items = agepostmeno (at baseline), radFracInc, BMI, lsBMDbase 
-    // code in switches: 
-    // DEN_TERI_COMBO = 0 : no drug
-    // DEN_TERI_COMBO = 1 : combinination TERI/DEN
-    // DEN_TERI_COMBO = 2 : TERI only
-    // DEN_TERI_COMBO = 3 : DEN only
-    // DEN_TERI_COMBO = 4 : SCLER only 
+  double kinBMDls =  koutBMDls*BMDls0;
   
-    
-    double PBO_BMD = 1;
-    double betaDrug = 0;
-    if (DEN_TERI_COMBO==0) { 
-      PBO_BMD = BMDls; 
-    }   
-    
-    double COMBO_BMD = 1;
-    if (DEN_TERI_COMBO==1) { 
-      COMBO_BMD = BMDlsCOMBO; 
-      betaDrug = betaDrug_COMBO;
-    }  
-    double TERI_BMD = 1;
-    double TERI_BMDth = 1;
-    double TERI_BMDfn = 1;
-    if (DEN_TERI_COMBO==2) { 
-      TERI_BMD = BMDlsTERI; 
-      betaDrug = betaDrug_TERI;
-      TERI_BMDth = BMDthTERI;
-      TERI_BMDfn = BMDfnTERI;
-    }     
-    
-    double DEN_BMD = 1; 
-    double DEN_BMDth = 1; 
-    double DEN_BMDfn = 1; 
-    if (DEN_TERI_COMBO==3) { 
-      DEN_BMD = BMDlsDEN; 
-      betaDrug = betaDrug_DENO;
-      DEN_BMDth=BMDthDEN;
-      DEN_BMDfn=BMDfnDEN;
-    } 
-    
-    double SCLER_BMD = 1; 
-    double SCLER_BMDth = 1; 
-    double SCLER_BMDfn = 1; 
-    
-    if (DEN_TERI_COMBO==4) { 
-      SCLER_BMD = BMDlsSCLER; 
-      betaDrug = betaDrug_SCLER;
-      SCLER_BMDth=BMDthSCLER;
-      SCLER_BMDfn=BMDfnSCLER;
-    } 
-    
-    
-    
-    if(SCLER_DEN_SEQ==1){
-      SCLER_BMD = BMDlsSCLER; 
-      SCLER_BMDth=BMDthSCLER;
-      SCLER_BMDfn=BMDfnSCLER;
-      DEN_BMD = BMDlsDEN;
-      DEN_BMDth=BMDthDEN;
-      DEN_BMDfn=BMDfnDEN;
-    }
-    
-    
-    double lsBMDtot = (PBO_BMD + COMBO_BMD + TERI_BMD + DEN_BMD + SCLER_BMD)-4; //(PBO_BMD + COMBO_BMD + TERI_BMD + DEN_BMD + SCLER_BMD);
-    
-    double thBMDtot = (1 + TERI_BMDth + DEN_BMDth + SCLER_BMDth)-3; // added 09/25
-    
-    double fnBMDtot = (1 +  TERI_BMDfn + DEN_BMDfn + SCLER_BMDfn)-3; // added 09/25
-    
-    
-    // Hazard Model Stuff // 
-    
-    drug = betaDrug;
-    
-    lsBMD = lsBMDtot*lsBMDbase; //nominal BMD
-    
-    double lsBMDCFB = (lsBMDtot*lsBMDbase) - lsBMDbase; //CFB BMD
-    
-    double postMenoAge = agepostmeno + T_0/365.25/24; 
-    
-    
-     Hazard = baseHazard*exp(HazBMDCov*log(lsBMD/lsBMDbase) + 
-       HazpostMenoAgeCov*(postMenoAge-postMenoAgeRef )+ 
-       HazradFracCov*radFracInc+HazBMICov*(BMI-bmiRef) + betaDrug);
-    //double Hazard = exp(baseHazard *(1+HazBMDcov*(BMDfn-0.8)));
-    // double Hazard = exp(baseHazard) * pow(BMDfn/0.8,HazBMDcov); 
-
-     dxdt_cumHazard = Hazard / 365.25/24; 
-
-    Survival = exp(-cumHazard);
-     
-    //Treatment effects
-    //
-
-    // L: RANK-L 
-    dxdt_L = kinL- koutL*L - k1*O*L + k2*N - k3*RNK*L + k4*M -  kdenosl*DENMOL*L;
-
-    // RNK: RANK 
-    dxdt_RNK = kinRNK*pow(TGFBact,kinRNKgam) - koutRNK*RNK - k3*RNK*L  + k4*M;
-
-    // M: RANK - RANK-L complex 
-    dxdt_M = k3*RNK*L - k4*M;
-
-    // N:  - RANK-L complex 
-    dxdt_N = k1*O*L - k2*N;
-
-    // O: OPG 
-    dxdt_O = pO*pow((SCLEREFF),gammaOPG) - k1*O*L + k2*N - kO*O;
-    
-   // *pow((SCLEREFF+1),gammaOPG) 
-
-    // d/dt(Q) = J15-J14+ J14a-J15a  ;Q=exchangeable bone Ca
-//       d/dt(Qbone) = -J14a + J15a    ;Qbone=non(immediately)-exchangeable bone Ca
-//       ~ 99% of the total Ca stored in bone; approximately 100 mmol of 25000 - 30000 mmol
-//       of total skeletal Ca considered immediately exchangeable with plasma Ca
-    
-    dxdt_Q = J15 - J14 + J14a - J15a;
-
-    dxdt_Qbone = J15a - J14a;
-
+  dxdt_BMDls = kinBMDls * pow(OB/OB0,gamOB) - koutBMDls * pow(OC/OC0,gamOCls) * BMDls;
+  
+  //Lumbar spine with DENOSUMAB
+  double kinBMDlsDEN =  koutBMDlsDEN*BMDlsDEN0;
+  
+  dxdt_BMDlsDEN = kinBMDlsDEN * pow(OB/OB0,gamOB) - koutBMDlsDEN * pow(OC/OC0,gamOClsDEN) * BMDlsDEN;
+  
+  //Femoral neck
+  double baseBMDfn = baseBMDfnBAS; // (1+baseBMDfnETH*ETHN)*(1+baseBMDfnBMI*(BMI-27));
+  double gamOCfn = gamOCfnBAS;     // (1+gamOCfnETH*ETHN)*(1+gamOCfnBMI*(BMI-27)); 
+  double koutBMDfn = koutBMDfnBAS; // (1+koutBMDfnETH*ETHN)*(1+koutBMDfnBMI*(BMI-27));
+  
+  double kinBMDfn =  koutBMDfn*BMDfn0;
+  
+  dxdt_BMDfn = kinBMDfn * pow(OB/OB0,gamOB) - koutBMDfn * pow(OC/OC0,gamOCfn) * BMDfn;
+  
+  //Femoral neck with DENOSUMAB
+  
+  double kinBMDfnDEN =  koutBMDfnDEN*BMDfnDEN0;
+  
+  dxdt_BMDfnDEN = kinBMDfnDEN * pow(OB/OB0,gamOB) - koutBMDfnDEN * pow(OC/OC0,gamOCfnDEN) * BMDfnDEN;
+  
+  
+  //Total hip with DENOSUMAB
+  
+  double kinBMDthDEN =  koutBMDthDEN*BMDthDEN0;
+  
+  dxdt_BMDthDEN = kinBMDthDEN * pow(OB/OB0,gamOB) - koutBMDthDEN * pow(OC/OC0,gamOCthDEN) * BMDthDEN;
+  
+  
+  // BMD for anabolic therapies 
+  
+  // SCLEROSTIN    
+  
+  
+  //Lumbar spine
+  
+  double kinBMDlsSCLER =  koutBMDSCLER*BMDlsSCLER0;
+  
+  double kin_BMDdel = kout_BMDdel;
+  
+  dxdt_delBMDls = kin_BMDdel * pow(OB/OB0,gamOBSCLERls) - kout_BMDdel*delBMDls;
+  
+  dxdt_BMDlsSCLER = kinBMDlsSCLER * delBMDls - koutBMDSCLER * pow(OC/OC0,gamOCSCLER) * BMDlsSCLER;
+  
+  //Femoral neck
+  
+  double kinBMDfnSCLER =  koutBMDSCLER*BMDfnSCLER0;
+  
+  dxdt_delBMDfn = kin_BMDdel* pow(OB/OB0,gamOBSCLERfn) - kout_BMDdel*delBMDfn;
+  
+  dxdt_BMDfnSCLER = kinBMDfnSCLER * delBMDfn  - pow(OC/OC0,gamOCSCLER) * koutBMDSCLER * BMDfnSCLER;
+  
+  //Total hip
+  
+  double kinBMDthSCLER =  koutBMDSCLER*BMDthSCLER0;
+  
+  
+  dxdt_delBMDth = kin_BMDdel * pow(OB/OB0,gamOBSCLERth) - kout_BMDdel*delBMDth;
+  
+  dxdt_BMDthSCLER = kinBMDthSCLER * delBMDth - koutBMDSCLER * pow(OC/OC0,gamOCSCLER) * BMDthSCLER;
+  
+  // 
+  //     TERIPARATIDE      
+  
+  //Lumbar spine
+  
+  
+  
+  double kinBMDlsTERI =  koutBMDlsTERI*BMDlsTERI0;
+  
+  double kin_BMDdelTERI = kout_BMDdelTERI;
+  
+  dxdt_delBMDlsTERI = kin_BMDdelTERI * pow(OB/OB0,gamOBTERIls) - kout_BMDdelTERI*delBMDlsTERI;
+  
+  dxdt_BMDlsTERI = kinBMDlsTERI * delBMDlsTERI - koutBMDlsTERI * pow(OC/OC0,gamOClsTERI) * BMDlsTERI;
+  
+  //Femoral neck
+  
+  double kinBMDfnTERI =  koutBMDfnTERI*BMDfnTERI0;
+  
+  dxdt_delBMDfnTERI = kin_BMDdelTERI* pow(OB/OB0,gamOBTERIfn) - kout_BMDdelTERI*delBMDfnTERI;
+  
+  dxdt_BMDfnTERI = kinBMDfnTERI * delBMDfnTERI  - pow(OC/OC0,gamOCfnTERI) * koutBMDfnTERI * BMDfnTERI;
+  
+  //Total hip
+  
+  double kinBMDthTERI =  koutBMDthTERI*BMDthTERI0;
+  
+  dxdt_delBMDthTERI = kin_BMDdelTERI* pow(OB/OB0,gamOBTERIth) - kout_BMDdelTERI*delBMDthTERI;
+  
+  dxdt_BMDthTERI = kinBMDthTERI * delBMDthTERI  - pow(OC/OC0,gamOCthTERI) * koutBMDthTERI * BMDthTERI;
+  
+  
+  // BMD with combination therapy /
+  
+  // DEN/TERI  
+  double kinBMDlsCOMBO = koutBMDlsCOMBO;
+  
+  dxdt_BMDlsCOMBO = 0;
+  if(DEN_TERI_COMBO==1) dxdt_BMDlsCOMBO = kinBMDlsCOMBO * pow(OB/OB0,gamOB) - koutBMDlsCOMBO* pow(OC/OC0,gamOClsDEN_TERI)*BMDlsCOMBO;
+  
+  double kinBMDthCOMBO = koutBMDthCOMBO;
+  dxdt_BMDthCOMBO = 0;
+  if(DEN_TERI_COMBO==1) dxdt_BMDthCOMBO = kinBMDthCOMBO * pow(OB/OB0,gamOB) - koutBMDthCOMBO* pow(OC/OC0,gamOCthDEN_TERI)*BMDthCOMBO;
+  
+  double kinBMDfnCOMBO = koutBMDfnCOMBO;
+  dxdt_BMDfnCOMBO = 0;
+  if(DEN_TERI_COMBO==1) dxdt_BMDfnCOMBO = kinBMDfnCOMBO * pow(OB/OB0,gamOB) - koutBMDfnCOMBO* pow(OC/OC0,gamOCfnDEN_TERI)*BMDfnCOMBO;
+  
+  
+  // FRACTURE PROBABILITY 
   //
-//     d/dt(BCL2) = bcl2Kin - bcl2Kout*BCL2
-//     d/dt(RX2) = RX2Kin - RX2Kout*RX2
-//     d/dt(CREB) = crebKin - crebKout*CREB
-//
-//     Initial conditions set empirically:
-//     both RX2 and CREB started at 10, BCL2 was the product (10*10=100).
-//
-//     BCL2 assumed half-life of 1 hour: rate const set to 0.693 (bcl2Kout)
-//
-//     BCL2 affected osteoblast survival:
-//     decreases elimination rate constant for OB (kbprime)
+  // BMDhat = 0.8 g/cm^2 
+  // postMenoAgehat = 20 y 
+  // BMIhat = 27.1 kg/m^2 
+  //req dataset items = agepostmeno (at baseline), radFracInc, BMI, lsBMDbase 
+  // code in switches: 
+  // DEN_TERI_COMBO = 0 : no drug
+  // DEN_TERI_COMBO = 1 : combinination TERI/DEN
+  // DEN_TERI_COMBO = 2 : TERI only
+  // DEN_TERI_COMBO = 3 : DEN only
+  // DEN_TERI_COMBO = 4 : SCLER only 
+  
+  
+  double PBO_BMD = 1;
+  double betaDrug = 0;
+  if (DEN_TERI_COMBO==0) { 
+    PBO_BMD = BMDls; 
+  }   
+  
+  double COMBO_BMD = 1;
+  if (DEN_TERI_COMBO==1) { 
+    COMBO_BMD = BMDlsCOMBO; 
+    betaDrug = betaDrug_COMBO;
+  }  
+  double TERI_BMD = 1;
+  double TERI_BMDth = 1;
+  double TERI_BMDfn = 1;
+  if (DEN_TERI_COMBO==2) { 
+    TERI_BMD = BMDlsTERI; 
+    betaDrug = betaDrug_TERI;
+    TERI_BMDth = BMDthTERI;
+    TERI_BMDfn = BMDfnTERI;
+  }     
+  
+  double DEN_BMD = 1; 
+  double DEN_BMDth = 1; 
+  double DEN_BMDfn = 1; 
+  if (DEN_TERI_COMBO==3) { 
+    DEN_BMD = BMDlsDEN; 
+    betaDrug = betaDrug_DENO;
+    DEN_BMDth=BMDthDEN;
+    DEN_BMDfn=BMDfnDEN;
+  } 
+  
+  double SCLER_BMD = 1; 
+  double SCLER_BMDth = 1; 
+  double SCLER_BMDfn = 1; 
+  
+  if (DEN_TERI_COMBO==4) { 
+    SCLER_BMD = BMDlsSCLER; 
+    betaDrug = betaDrug_SCLER;
+    SCLER_BMDth=BMDthSCLER;
+    SCLER_BMDfn=BMDfnSCLER;
+  } 
+  
+  
+  
+  if(SCLER_DEN_SEQ==1){
+    SCLER_BMD = BMDlsSCLER; 
+    SCLER_BMDth=BMDthSCLER;
+    SCLER_BMDfn=BMDfnSCLER;
+    DEN_BMD = BMDlsDEN;
+    DEN_BMDth=BMDthDEN;
+    DEN_BMDfn=BMDfnDEN;
+  }
+  
+  
+  double lsBMDtot = (PBO_BMD + COMBO_BMD + TERI_BMD + DEN_BMD + SCLER_BMD)-4; //(PBO_BMD + COMBO_BMD + TERI_BMD + DEN_BMD + SCLER_BMD);
+  
+  double thBMDtot = (1 + TERI_BMDth + DEN_BMDth + SCLER_BMDth)-3; // added 09/25
+  
+  double fnBMDtot = (1 +  TERI_BMDfn + DEN_BMDfn + SCLER_BMDfn)-3; // added 09/25
+  
+  
+  // Hazard Model Stuff // 
+  
+  double drug = betaDrug;
+  
+  double lsBMD = lsBMDtot*lsBMDbase; //nominal BMD
+  
+  double lsBMDCFB = (lsBMDtot*lsBMDbase) - lsBMDbase; //CFB BMD
+  
+  double postMenoAge = agepostmeno + T_0/365.25/24; 
+  
+  
+  double Hazard = baseHazard*exp(HazBMDCov*log(lsBMD/lsBMDbase) + 
+    HazpostMenoAgeCov*(postMenoAge-postMenoAgeRef )+ 
+    HazradFracCov*radFracInc+HazBMICov*(BMI-bmiRef) + betaDrug);
+  //double Hazard = exp(baseHazard *(1+HazBMDcov*(BMDfn-0.8)));
+  // double Hazard = exp(baseHazard) * pow(BMDfn/0.8,HazBMDcov); 
+  
+  dxdt_cumHazard = Hazard / 365.25/24; 
+  
+  double Survival = exp(-cumHazard);
+  
+  //Treatment effects
+  //
+  
+  // L: RANK-L 
+  dxdt_L = kinL- koutL*L - k1*O*L + k2*N - k3*RNK*L + k4*M -  kdenosl*DENMOL*L;
+  
+  // RNK: RANK 
+  dxdt_RNK = kinRNK*pow(TGFBact,kinRNKgam) - koutRNK*RNK - k3*RNK*L  + k4*M;
+  
+  // M: RANK - RANK-L complex 
+  dxdt_M = k3*RNK*L - k4*M;
+  
+  // N:  - RANK-L complex 
+  dxdt_N = k1*O*L - k2*N;
+  
+  // O: OPG 
+  dxdt_O = pO*pow((SCLEREFF),gammaOPG) - k1*O*L + k2*N - kO*O;
+  
+  // *pow((SCLEREFF+1),gammaOPG) 
+  
+  // d/dt(Q) = J15-J14+ J14a-J15a  ;Q=exchangeable bone Ca
+  //       d/dt(Qbone) = -J14a + J15a    ;Qbone=non(immediately)-exchangeable bone Ca
+  //       ~ 99% of the total Ca stored in bone; approximately 100 mmol of 25000 - 30000 mmol
+  //       of total skeletal Ca considered immediately exchangeable with plasma Ca
+  
+  dxdt_Q = J15 - J14 + J14a - J15a;
+  
+  dxdt_Qbone = J15a - J14a;
+  
+  //
+  //     d/dt(BCL2) = bcl2Kin - bcl2Kout*BCL2
+  //     d/dt(RX2) = RX2Kin - RX2Kout*RX2
+  //     d/dt(CREB) = crebKin - crebKout*CREB
+  //
+  //     Initial conditions set empirically:
+  //     both RX2 and CREB started at 10, BCL2 was the product (10*10=100).
+  //
+  //     BCL2 assumed half-life of 1 hour: rate const set to 0.693 (bcl2Kout)
+  //
+  //     BCL2 affected osteoblast survival:
+  //     decreases elimination rate constant for OB (kbprime)
   
   dxdt_RX2 = RX2Kin - RX2Kout*RX2 ;
-
+  
   dxdt_CREB = crebKin - crebKout*CREB;
-
+  
   dxdt_BCL2 = bcl2Kout*CREB*RX2 - bcl2Kout*BCL2;
-
+  
   // Teriparatide PK info 
   // TERIPKIN = TERISC * TERICL/TERIVC 
   dxdt_TERISC = -TERIPKIN;
   dxdt_TERICENT  = TERIPKIN - TERICENT*TERIKA;
-
+  
   // GENERAL PK COMPARTMENT 
-
+  
   double GFRend = GFR0 - GFRdelta/16.667;
   double GFRtau_ = GFRtau*8766;
-
+  
   double kGFR = -log(GFRend/GFR0)/GFRtau_;
-
+  
   dxdt_GFR = -kGFR*GFR;
-
+  
   // NONLINEAR PIECE 
   double PKCLNL = PKVMAX/(PKKM+PKCP);
-
+  
   // PKGUT 
   dxdt_PKGUT = -PKKA*PKGUT;
-
+  
   // PKCENT 
   dxdt_PKCENT = PKKA*PKGUT + PKQ1*PKPER1/PKVP1 + PKQ2*PKPER2/PKVP2 - (PKQ1+PKQ2+PKCL+PKCLNL)*PKCENT/PKVC;
-
+  
   // PKPER1 
   dxdt_PKPER1 = PKQ1*PKCENT/PKVC - PKQ1*PKPER1/PKVP1;
-
+  
   // PKPER2 
   dxdt_PKPER2 = PKQ2*PKCENT/PKVC - PKQ2*PKPER2/PKVP2;
-
-
+  
+  
   // DENOSUMAB PK 
   double  DENCLNL =  (DENVMAX/(DENKM+DENCP));
   dxdt_DENSC =  -DENKA*DENSC;
@@ -1283,31 +1226,24 @@ $INIT
   dxdt_SCLER = SOSTKIN-SOSTKOUT*SCLER-(SOSTK0-SOSTKOUT)*SCLER*(SOSTCENT/SOSTVC)/(SOSTKM+(SOSTCENT/SOSTVC));
   
   // BSAP: % of baseline 
-   
-   BSAP = (OB/OB0*100); 
   
-
+  double BSAP = (OB/OB0*100); 
+  
+  
   // Collects calcium in urine - cumulative rate 
   // This is a differential equation 
   dxdt_UCA = J27;
-
+  
 
 
 [TABLE]
-capture DENMOL = (DENCENT/DENVC/150000)*1000*1000;
-capture OB = (OBfast*trans + OBslow);
-capture OCfrac = OC/OC_0;
-capture OBfrac = (OBfast+OBslow)/(OBfast_0 + OBslow_0);
 capture BSAP_OB = (OB/OB0*100);
 capture SCLERmeas = (100*OCY/OCY_0);
 capture inrate = (((kbfast*OBfast)+(kbslow*OBslow)) * FracOCY);
 capture P1NPsim = ((2050 * pow((BSAP), 1.8) / ((pow(467, 1.8) + pow((BSAP),1.8))))-20.4181); 
-capture SCLEREFF = ((SCLER/SCLER_0));
 capture ROB1out = (pow((SCLEREFF),gammaDr)*KPT*ROB1);
 capture picROB = ((E0PicROB + EmaxPicROB*pow(TGFBact,PicROBgam)/(pow(TGFBact,PicROBgam) + pow(EC50PicROB,PicROBgam))));
 capture CTXsim = (OC/OC0*100);
-capture OsteoEffect = pow((Osteoblast/OB0), (TotOsteoEffectGam/fracOBEffect));
-capture fracOBEffect = (FracOBE/TOL); 
  
 capture lsBMDsimSCLER = (BMDlsSCLER*100);
 capture lsBMDsimTERI = (BMDlsTERI*100);
@@ -1318,45 +1254,34 @@ capture thBMDsimDEN = (BMDthDEN*100);
 capture fnBMDsimSCLER = (BMDfnSCLER*100);
 capture fnBMDsimTERI = (BMDfnTERI*100);
 capture fnBMDsimDEN = (BMDfnDEN*100);
-capture BMDls=(BMDls*100);
 capture lsBMDsimCOMBO = (BMDlsCOMBO*100);
 capture thBMDsimCOMBO = (BMDthCOMBO*100);
 capture fnBMDsimCOMBO = (BMDfnCOMBO*100);
 
-capture lsBMDtot = (PBO_BMD + COMBO_BMD + TERI_BMD + DEN_BMD + SCLER_BMD)-4; 
-capture thBMDtot = (1 + TERI_BMDth + DEN_BMDth + SCLER_BMDth)-3; //(PBO_BMD + COMBO_BMD + TERI_BMD + DEN_BMD + SCLER_BMD);
-capture fnBMDtot = (1 +  TERI_BMDfn + DEN_BMDfn + SCLER_BMDfn)-3;
 
-
-DV = ((2050 * pow((BSAP), 1.8) / ((pow(467, 1.8) + pow((BSAP),1.8))))-20.4181);
+double DV = ((2050 * pow((BSAP), 1.8) / ((pow(467, 1.8) + pow((BSAP),1.8))))-20.4181);
 if(TYPE==1) DV = (OC/OC0*100);
-capture DV = DV;
-capture Hazard = (cumHazard*1);
-capture Survival = (Survival*1); 
-capture lsBMD =(lsBMD*1);
-capture drug = (drug*1);
 
-if(Scler_BMD_type==0) SclerBMDpred = (BMDlsSCLER*100); 
-if(Scler_BMD_type==1) SclerBMDpred = (BMDthSCLER*100);
-if(Scler_BMD_type==2) SclerBMDpred = (BMDfnSCLER*100);
-capture SclerBMDpred = SclerBMDpred;
+double SclerBMDpred;
+if(Scler_BMD_type==0)  SclerBMDpred = (BMDlsSCLER*100); 
+if(Scler_BMD_type==1)  SclerBMDpred = (BMDthSCLER*100);
+if(Scler_BMD_type==2)  SclerBMDpred = (BMDfnSCLER*100);
 
-if(Deno_BMD_type==0) DenoBMDpred = (BMDlsDEN*100); 
-if(Deno_BMD_type==1) DenoBMDpred = (BMDthDEN*100);
-if(Deno_BMD_type==2) DenoBMDpred = (BMDfnDEN*100);
-capture DenoBMDpred = DenoBMDpred;
+double DenoBMDpred;
+if(Deno_BMD_type==0)  DenoBMDpred = (BMDlsDEN*100); 
+if(Deno_BMD_type==1)  DenoBMDpred = (BMDthDEN*100);
+if(Deno_BMD_type==2)  DenoBMDpred = (BMDfnDEN*100);
 
-if(Teri_BMD_type==0) TeriBMDpred = (BMDlsTERI*100); 
-if(Teri_BMD_type==1) TeriBMDpred = (BMDthTERI*100);
-if(Teri_BMD_type==2) TeriBMDpred = (BMDfnTERI*100);
+double TeriBMDpred;
+if(Teri_BMD_type==0)  TeriBMDpred = (BMDlsTERI*100); 
+if(Teri_BMD_type==1)  TeriBMDpred = (BMDthTERI*100);
+if(Teri_BMD_type==2)  TeriBMDpred = (BMDfnTERI*100);
 
-if(Combo_BMD_type==0) ComboBMDpred = (BMDlsCOMBO*100); 
-if(Combo_BMD_type==1) ComboBMDpred = (BMDthCOMBO*100);
-if(Combo_BMD_type==2) ComboBMDpred = (BMDfnCOMBO*100);
-capture ComboBMDpred = ComboBMDpred;
+double ComboBMDpred;
+if(Combo_BMD_type==0)  ComboBMDpred = (BMDlsCOMBO*100); 
+if(Combo_BMD_type==1)  ComboBMDpred = (BMDthCOMBO*100);
+if(Combo_BMD_type==2)  ComboBMDpred = (BMDfnCOMBO*100);
 
-capture PTHconc = PTHconc;
-capture TeriBMDpred = TeriBMDpred;
 
 capture PTHpm = (PTH/V1);   //* PTH conc in pM */
 capture PTHc = (PTH/V1*9.4) ;     //* PTH conc in pg/mL */
@@ -1369,4 +1294,4 @@ capture OBtot = OBfast + OBslow;
 capture OCfrac = OC/OC_0;
 capture OBfrac = (OBfast+OBslow)/(OBfast_0 + OBslow_0);
 
-$CAPTURE DENMOL T43 DENCP SCLERCP TERICP
+$CAPTURE DENMOL T43 DENCP SOSTCP DenoBMDpred TeriBMDpred ComboBMDpred SclerBMDpred

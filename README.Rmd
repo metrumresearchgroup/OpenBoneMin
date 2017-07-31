@@ -44,6 +44,16 @@ out <- sim_denos(dose=c(10,60,210), dur=6)
 plot(out, log(DENCP) + BMDlsDENchange~time)
 ```
 
+## Simulate sclerostin data 
+```{r}
+out<-sim_scler(dose=c(70,210,350), dur=12)
+
+plot(out, SOSTCP + lsBMDsimSCLER~time)
+
+```
+
+
+
 # Simulate secondary hyperparathyroidism
 
 Have `GFR` decline by a certain amount (`GFRdelta`) over a 
