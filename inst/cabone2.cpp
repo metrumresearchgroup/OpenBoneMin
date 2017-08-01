@@ -280,11 +280,11 @@
   // gammascler = 0.5 #
   gammaOCY = 0.276280938  // updated 04/09
   gammaOPG = 1.597073748 // updated 04/09
-  SCLEROBgam =  0.162250232 // updated 04/09
+  SCLEROBgam = 0.162250232 // updated 04/09
   kout_T = 0.006073441 //
   
   koutBMDSCLER = 0.000145
-  gamOBSCLERls =  0.75766752 // 4/22 change
+  gamOBSCLERls =   0.75766752 // 4/22 change
   gamOCSCLER = 0.06530286 // change 04/22
   
   gamOBSCLERth = 0.22459622 //4/22 change
@@ -875,7 +875,7 @@ $INIT
   // translation compartment to delay SCLER effect on OB 
   
   double kin_T = kout_T;
-  
+  //double EC50SCLER = 678.8981;
   double EC50SCLER =  (exp(log(EMAXSCLER-1)/SCLEROBgam));
   
   dxdt_trans = kin_T*(EMAXSCLER*pow(SCLEREFF,SCLEROBgam)/(pow(EC50SCLER,SCLEROBgam)+pow(SCLEREFF,SCLEROBgam))) - kout_T*trans;

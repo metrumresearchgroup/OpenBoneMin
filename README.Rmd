@@ -41,14 +41,15 @@ plot(out)
 ```{r}
 out <- sim_denos(dose=c(10,60,210), dur=6)
 
-plot(out, log(DENCP) + BMDlsDENchange~time)
+plot(out, log(DENCP) + BMDlsDENchange~time, xlab="time (months)")
+
 ```
 
 ## Simulate sclerostin data 
 ```{r}
 out<-sim_scler(dose=c(70,210,350), dur=12)
 
-plot(out, SOSTCP + lsBMDsimSCLER~time)
+plot(out, SOSTCP + lsBMDsimSCLER~time, xlab="time (hours)")
 
 ```
 
@@ -75,6 +76,21 @@ doses into `pmol`.
 amt_teri(20)
 ```
 
+## This is a function to re-create plots from Eudy, et al.(2015), CPT:PSP; Figure 3 ## 
+
+```{r}
+
+create_scler_plots("P1NP")
+
+```
+
+## This is a function to simulate combination therapy (combination arm data from DATA study, Leder et al, 2014)## 
+## (ACOP 2015 poster) ## 
+
+```{r}
+sim_combo_arms()
+
+```
 ## Export the model code
 
 It's a little hard to see what's happening here.  But basically, this grabs
