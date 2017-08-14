@@ -66,16 +66,6 @@ sim_2h() %>% plot
 ```
 
 
-# Some helper functions
-
-## Convert `teriparatide` doses
-
-Usually, we think of doses in micrograms.  This function turns those
-doses into `pmol`.
-
-```{r}
-amt_teri(20)
-```
 
 ## This is a function to re-create plots from Eudy, et al.(2015), CPT:PSP; Figure 3 ## 
 
@@ -116,6 +106,18 @@ ggplot(data=sims, aes(time,thBMDsimSCLER)) +
 #sim_combo_arms()
 
 ```
+
+# Some helper functions
+
+## Convert `teriparatide` doses
+
+Usually, we think of doses in micrograms.  This function turns those
+doses into `pmol`.
+
+```{r}
+amt_teri(20)
+```
+
 ## Export the model code
 
 It's a little hard to see what's happening here.  But basically, this grabs

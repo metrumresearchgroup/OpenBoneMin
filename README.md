@@ -65,20 +65,6 @@ sim_2h() %>% plot
 
 ![](inst/img/README-unnamed-chunk-7-1.png)
 
-Some helper functions
-=====================
-
-Convert `teriparatide` doses
-----------------------------
-
-Usually, we think of doses in micrograms. This function turns those doses into `pmol`.
-
-``` r
-amt_teri(20)
-```
-
-    . [1] 4856.962
-
 This is a function to re-create plots from Eudy, et al.(2015), CPT:PSP; Figure 3
 --------------------------------------------------------------------------------
 
@@ -93,7 +79,7 @@ ggplot(data=sims, aes(time,P1NPsim)) +
    geom_line() + facet_wrap(~label)
 ```
 
-![](inst/img/README-unnamed-chunk-10-1.png)
+![](inst/img/README-unnamed-chunk-9-1.png)
 
 ### `CTX`
 
@@ -102,7 +88,7 @@ ggplot(data=sims, aes(time,CTXsim)) +
    geom_line() + facet_wrap(~label)
 ```
 
-![](inst/img/README-unnamed-chunk-11-1.png)
+![](inst/img/README-unnamed-chunk-10-1.png)
 
 ### Lumbar spine `BMD`
 
@@ -111,7 +97,7 @@ ggplot(data=sims, aes(time,lsBMDsimSCLER)) +
    geom_line() + facet_wrap(~label)
 ```
 
-![](inst/img/README-unnamed-chunk-12-1.png)
+![](inst/img/README-unnamed-chunk-11-1.png)
 
 ### Total hip `BMD`
 
@@ -120,7 +106,7 @@ ggplot(data=sims, aes(time,thBMDsimSCLER)) +
    geom_line() + facet_wrap(~label)
 ```
 
-![](inst/img/README-unnamed-chunk-13-1.png)
+![](inst/img/README-unnamed-chunk-12-1.png)
 
 This is a function to simulate combination therapy (combination arm data from DATA study, Leder et al, 2014)
 ------------------------------------------------------------------------------------------------------------
@@ -131,6 +117,20 @@ This is a function to simulate combination therapy (combination arm data from DA
 ``` r
 #sim_combo_arms()
 ```
+
+Some helper functions
+=====================
+
+Convert `teriparatide` doses
+----------------------------
+
+Usually, we think of doses in micrograms. This function turns those doses into `pmol`.
+
+``` r
+amt_teri(20)
+```
+
+    . [1] 4856.962
 
 Export the model code
 ---------------------
