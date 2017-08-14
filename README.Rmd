@@ -2,17 +2,12 @@
 title: ""
 author: ""
 date: ""
-output: 
-  md_document:
-    variant: markdown_github
+output: github_document
 ---
 
 ```{r,echo=FALSE,message=FALSE}
 knitr::opts_chunk$set(fig.path="inst/img/README-", comment='.', message=FALSE)
 ```
-
-[![questions](https://img.shields.io/badge/ask_for-Help-brightgreen.svg)](https://github.com/metrumresearchgroup/cabone/issues)
-[![Metrumrg](https://img.shields.io/badge/contact-MetrumRG-brightgreen.svg)](http://metrumrg.com)
 
 # About
 A multiscale systems model of bone function, remodeling and health. 
