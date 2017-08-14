@@ -2,27 +2,32 @@ Calcium Bone Model
 ==================
 
 Documentation
--------------
+=============
 
 -   Documentation [here](vignettes/modeldoc.Rmd)
 
 Installation
-------------
+============
 
 ``` r
 remotes::install_github("metrumresearchgroup/cabone")
 ```
 
 Usage
------
+=====
+
+-   [Simulate teriparatide data](#teri)
+-   [Simulate denosumab data](#denos)
+-   [Simulate sclerostin mAb data](#scler)
+-   [Simulate secondary hyperparathyroidism](#hyper)
+-   [Simulate bone markers after sclerostin mAb](#scler2)
 
 ``` r
 library(cabone)
 library(ggplot2)
 ```
 
-Simulate teriparatide data
---------------------------
+<a name="teri"></a> \#\# Simulate teriparatide data
 
 ``` r
 out <- sim_teri(dose=c(20,40), dur=9)
@@ -32,8 +37,7 @@ plot(out)
 
 ![](inst/img/README-unnamed-chunk-4-1.png)
 
-Simulate denosumab data
------------------------
+<a name="denos"></a> \#\#\# Simulate denosumab data
 
 ``` r
 out <- sim_denos(dose=c(10,60,210), dur=6)
@@ -43,8 +47,7 @@ plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 
 ![](inst/img/README-unnamed-chunk-5-1.png)
 
-Simulate sclerostin data
-------------------------
+<a name="scler"></a> \#\# Simulate sclerostin data
 
 ``` r
 out <- sim_scler(dose=c(70,210,350), dur=12)
@@ -54,8 +57,7 @@ plot(out, SOSTCP + lsBMDsimSCLER ~ time, xlab="Time (hours)")
 
 ![](inst/img/README-unnamed-chunk-6-1.png)
 
-Simulate secondary hyperparathyroidism
-======================================
+<a name="hyper"></a> \#\# Simulate secondary hyperparathyroidism
 
 Have `GFR` decline by a certain amount (`GFRdelta`) over a certail period of time (`GFRtau`).
 
@@ -65,8 +67,7 @@ sim_2h() %>% plot
 
 ![](inst/img/README-unnamed-chunk-7-1.png)
 
-Bone markers and BMD after sclerostin monoclonal antibody
----------------------------------------------------------
+<a name="scler2"></a> \#\# Bone markers and BMD after sclerostin monoclonal antibody
 
 -   Re-create simulated data in Eudy, et al. (2015) CPT:PSP, figure 3
 
