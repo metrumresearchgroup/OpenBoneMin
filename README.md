@@ -40,6 +40,9 @@ plot(out)
 
 ![](inst/img/README-unnamed-chunk-4-1.png)
 
+-   `PTHpm` teriparatide concentration (pM)
+-   `CaC` calcium concentration (mM)
+
 <a name="denos"></a>
 
 ### Simulate denosumab data
@@ -51,6 +54,9 @@ plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 ```
 
 ![](inst/img/README-unnamed-chunk-5-1.png)
+
+-   `DENCP` denosumab concentration
+-   `BMDlsDENchange` lumbar spine change from basline
 
 <a name="scler"></a>
 
@@ -77,6 +83,14 @@ sim_2h() %>% plot
 ```
 
 ![](inst/img/README-unnamed-chunk-7-1.png)
+
+-   `CaC` calcium concentration
+-   `PTHpm` parathyroid hormone
+-   `GFR` glomerular filtration rate
+-   `OC` osteoclasts
+-   `ECCPhos` extracellular phosphate
+
+All values are presented as fraction of the base line value.
 
 <a name="scler2"></a>
 

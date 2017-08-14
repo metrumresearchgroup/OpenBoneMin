@@ -47,6 +47,9 @@ out <- sim_teri(dose=c(20,40), dur=9)
 plot(out)
 ```
 
+- `PTHpm` teriparatide concentration (pM)
+- `CaC` calcium concentration (mM)
+
 <a name="denos"></a>
 
 ### Simulate denosumab data
@@ -57,6 +60,11 @@ out <- sim_denos(dose=c(10,60,210), dur=6)
 plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 
 ```
+
+
+- `DENCP` denosumab concentration
+- `BMDlsDENchange` lumbar spine change from basline
+
 
 <a name="scler"></a>
 
@@ -78,6 +86,15 @@ certail period of time (`GFRtau`).
 ```{r}
 sim_2h() %>% plot
 ```
+
+- `CaC` calcium concentration 
+- `PTHpm` parathyroid hormone 
+- `GFR` glomerular filtration rate
+- `OC` osteoclasts
+- `ECCPhos` extracellular phosphate
+
+All values are presented as fraction of the 
+base line value.
 
 
 <a name="scler2"></a>
