@@ -38,6 +38,7 @@ library(ggplot2)
 
 
 <a name="teri"></a>
+
 ## Simulate teriparatide data
 
 ```{r}
@@ -47,6 +48,7 @@ plot(out)
 ```
 
 <a name="denos"></a>
+
 ### Simulate denosumab data
 
 ```{r}
@@ -57,6 +59,7 @@ plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 ```
 
 <a name="scler"></a>
+
 ## Simulate sclerostin data 
 ```{r}
 out <- sim_scler(dose=c(70,210,350), dur=12)
@@ -66,6 +69,7 @@ plot(out, SOSTCP + lsBMDsimSCLER ~ time, xlab="Time (hours)")
 ```
 
 <a name="hyper"></a>
+
 ## Simulate secondary hyperparathyroidism
 
 Have `GFR` decline by a certain amount (`GFRdelta`) over a 
@@ -77,6 +81,7 @@ sim_2h() %>% plot
 
 
 <a name="scler2"></a>
+
 ## Bone markers and BMD after sclerostin monoclonal antibody
 
 - Re-create simulated data in Eudy, et al. (2015) CPT:PSP, figure 3
