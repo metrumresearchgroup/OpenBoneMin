@@ -1,5 +1,9 @@
-Calcium Bone Model
-==================
+[![questions](https://img.shields.io/badge/ask_for-Help-brightgreen.svg)](https://github.com/metrumresearchgroup/cabone/issues) [![Metrumrg](https://img.shields.io/badge/contact-MetrumRG-brightgreen.svg)](http://metrumrg.com)
+
+About
+=====
+
+A multiscale systems model of bone function, remodeling and health.
 
 Documentation
 =============
