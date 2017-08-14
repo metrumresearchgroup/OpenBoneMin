@@ -9,6 +9,9 @@ CHKDIR=Rchecks
 ## Set libPaths:
 #export R_LIBS=${LIBDIR}
 
+readme:
+	Rscript -e "rmarkdown::render('README.Rmd')"
+
 ec:
 	echo ${VERSION}
 

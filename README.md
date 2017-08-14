@@ -38,7 +38,7 @@ Simulate denosumab data
 ``` r
 out <- sim_denos(dose=c(10,60,210), dur=6)
 
-plot(out, log(DENCP) + BMDlsDENchange~time, xlab="time (months)")
+plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="time (months)")
 ```
 
 ![](inst/img/README-unnamed-chunk-5-1.png)
@@ -49,7 +49,7 @@ Simulate sclerostin data
 ``` r
 out<-sim_scler(dose=c(70,210,350), dur=12)
 
-plot(out, SOSTCP + lsBMDsimSCLER~time, xlab="time (hours)")
+plot(out, SOSTCP + lsBMDsimSCLER ~ time, xlab="time (hours)")
 ```
 
 ![](inst/img/README-unnamed-chunk-6-1.png)
