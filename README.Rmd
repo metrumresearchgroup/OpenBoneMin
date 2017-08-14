@@ -68,7 +68,11 @@ plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 
 <a name="scler"></a>
 
-## Simulate sclerostin data 
+## Simulate sclerostin mAb and sclerostin data 
+
+- `SOSTCP` sclerostin mAb concentration
+- `lsBMDsimSCLER` lumbar spine bone mineral density (`BMD`)
+
 ```{r}
 out <- sim_scler(dose=c(70,210,350), dur=12)
 
