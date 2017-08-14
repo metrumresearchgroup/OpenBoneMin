@@ -8,7 +8,7 @@ sim_denos(dose = 60, ii = 6, dur = 3, delta = 4,
   request = "DENCP,DENMOL,BMDlsDENchange", tscale = 1/(24 * 28))
 }
 \arguments{
-\item{dose}{denosumab dose in micrograms}
+\item{dose}{denosumab dose in milligrams}
 
 \item{ii}{dosing interval in months}
 

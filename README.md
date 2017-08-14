@@ -38,7 +38,7 @@ Simulate denosumab data
 ``` r
 out <- sim_denos(dose=c(10,60,210), dur=6)
 
-plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="time (months)")
+plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 ```
 
 ![](inst/img/README-unnamed-chunk-5-1.png)
@@ -47,9 +47,9 @@ Simulate sclerostin data
 ------------------------
 
 ``` r
-out<-sim_scler(dose=c(70,210,350), dur=12)
+out <- sim_scler(dose=c(70,210,350), dur=12)
 
-plot(out, SOSTCP + lsBMDsimSCLER ~ time, xlab="time (hours)")
+plot(out, SOSTCP + lsBMDsimSCLER ~ time, xlab="Time (hours)")
 ```
 
 ![](inst/img/README-unnamed-chunk-6-1.png)
@@ -65,8 +65,10 @@ sim_2h() %>% plot
 
 ![](inst/img/README-unnamed-chunk-7-1.png)
 
-This is a function to re-create plots from Eudy, et al.(2015), CPT:PSP; Figure 3
---------------------------------------------------------------------------------
+Bone markers and BMD after sclerostin monoclonal antibody
+---------------------------------------------------------
+
+-   Re-create simulated data in Eudy, et al. (2015) CPT:PSP, figure 3
 
 ``` r
 sims <- sim_scler_data()
@@ -108,14 +110,11 @@ ggplot(data=sims, aes(time,thBMDsimSCLER)) +
 
 ![](inst/img/README-unnamed-chunk-12-1.png)
 
-This is a function to simulate combination therapy (combination arm data from DATA study, Leder et al, 2014)
-------------------------------------------------------------------------------------------------------------
-
-(ACOP 2015 poster)
-------------------
+Teriparatide + denosumab combination therapy
+--------------------------------------------
 
 ``` r
-#sim_combo_arms()
+sims <- sim_combo_arms()
 ```
 
 Some helper functions

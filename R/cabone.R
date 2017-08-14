@@ -67,7 +67,7 @@ amt_scler <- function(x) x/0.145
 
 ##' Simulate with teriparatide dosing
 ##' 
-##' @param dose teriparatide dose in milligrams
+##' @param dose teriparatide dose in micrograms
 ##' @param ii dosing interval in hours
 ##' @param dur number of doses to simulate
 ##' @param delta simulation time grid
@@ -101,7 +101,7 @@ sim_scler <- function(dose=210, ii=1*24*28, dur=12, delta=24*28,
 
 ##' Simulate with denosumab dosing
 ##' 
-##' @param dose denosumab dose in micrograms
+##' @param dose denosumab dose in milligrams
 ##' @param ii dosing interval in months
 ##' @param dur number of doses to simulate
 ##' @param delta simulation time grid in hours
@@ -226,19 +226,19 @@ sim_scler_data <- function(){
 ##' @export
 sim_combo_arms <- function() {
   
-  .mod <- cabone_scler()
+  mod <- cabone_scler()
   
-  .events1 <- ev(amt = 4856.962,cmt="TERISC",ii=24, addl= 671) 
-  .events2 <- ev(amt = 6E7,cmt="DENSC",ii=4032, addl= 3)
-  .events3 <-  .events1 + .events2
+  events1 <- ev(amt = 4856.962,cmt="TERISC",ii=24, addl= 671) 
+  events2 <- ev(amt = 6E7,cmt="DENSC",ii=4032, addl= 3)
+  events3 <-  events1 + events2
   
   .end <- 16128
   .delta <- 24*7
   
   message("Simulating teriparatide data ...")
   out1 <- 
-    .mod %>% 
-    ev(.events1) %>% 
+    mod %>% 
+    ev(events1) %>% 
     mrgsim(end=.end, Req="lsBMDsimTERI", delta=.delta) %>%
     dplyr::mutate(regimen = "teriparatide", 
                   lsBMD = lsBMDsimTERI,
@@ -247,8 +247,8 @@ sim_combo_arms <- function() {
   
   message("Simulating denosumab data ...")
   out2 <- 
-    .mod %>% 
-    ev(.events2) %>% 
+    mod %>% 
+    ev(events2) %>% 
     mrgsim(end=.end,Req="lsBMDsimDEN", delta=.delta) %>%
     dplyr::mutate(regimen = "denosumab", 
                   lsBMD = lsBMDsimDEN, 
@@ -257,8 +257,8 @@ sim_combo_arms <- function() {
   
   message("Simulating combination data ...")
   out3 <- 
-    .mod %>% 
-    ev(.events3) %>% 
+    mod %>% 
+    ev(events3) %>% 
     param(DEN_TERI_COMBO=1) %>% 
     mrgsim(end=.end, Req="lsBMDsimCOMBO", delta=.delta) %>%
     dplyr::mutate(regimen = "teri+denos", 

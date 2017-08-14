@@ -8,7 +8,7 @@ sim_teri(dose = 20, ii = 24, dur = 27, delta = 0.1,
   request = "PTHpm,CaC")
 }
 \arguments{
-\item{dose}{teriparatide dose in milligrams}
+\item{dose}{teriparatide dose in micrograms}
 
 \item{ii}{dosing interval in hours}
 
