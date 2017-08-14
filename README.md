@@ -94,8 +94,8 @@ sim_2h() %>% plot
 
 <a name="scler2"></a>
 
-Bone markers and BMD after sclerostin monoclonal antibody
----------------------------------------------------------
+Bone markers and `BMD` after sclerostin monoclonal antibody
+-----------------------------------------------------------
 
 -   Re-create simulated data in Eudy, et al. (2015) CPT:PSP, figure 3
 
@@ -103,7 +103,7 @@ Bone markers and BMD after sclerostin monoclonal antibody
 sims <- sim_scler_data()
 ```
 
-### `P1NP`
+### `P1NP` procollagen type 1 N propeptide
 
 ``` r
 ggplot(data=sims, aes(time,P1NPsim,col=label)) + 
@@ -112,7 +112,7 @@ ggplot(data=sims, aes(time,P1NPsim,col=label)) +
 
 ![](inst/img/README-unnamed-chunk-9-1.png)
 
-### `CTX`
+### `CTX` C-terminal telopeptide
 
 ``` r
 ggplot(data=sims, aes(time,CTXsim,col=label)) + 
