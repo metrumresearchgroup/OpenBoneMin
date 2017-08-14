@@ -2,6 +2,14 @@
 camodel <- "cabone"
 camodel_scler <- "cabone2"
 
+##' Plotting helper functions.
+##' @param ... passed to \code{ggplot::scale_color_brewer}
+##' @export
+.colSet1 <- function(...) ggplot2::scale_color_brewer(palette="Set1",...)
+##' @export
+##' @rdname .colSet1 
+.colSet2 <- function(...) ggplot2::scale_color_brewer(palette="Set2",...)
+
 ##' Get the locaton of model source code.
 ##' 
 ##' @export
