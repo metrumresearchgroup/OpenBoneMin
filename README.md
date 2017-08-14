@@ -98,6 +98,7 @@ Bone markers and `BMD` after sclerostin monoclonal antibody
 -----------------------------------------------------------
 
 -   Re-create simulated data in Eudy, et al. (2015) CPT:PSP, figure 3
+-   Outcomes (`P1NP`, `CTX`, `LS-BMD`, `TH-BMD`) are presented as percent change from baseline
 
 ``` r
 sims <- sim_scler_data()
