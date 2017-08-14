@@ -41,18 +41,23 @@ library(ggplot2)
 
 ## Simulate teriparatide data
 
+- `PTHpm` teriparatide concentration (pM)
+- `CaC` calcium concentration (mM)
+
 ```{r}
 out <- sim_teri(dose=c(20,40), dur=9)
 
 plot(out)
 ```
 
-- `PTHpm` teriparatide concentration (pM)
-- `CaC` calcium concentration (mM)
 
 <a name="denos"></a>
 
 ### Simulate denosumab data
+
+- `DENCP` denosumab concentration
+- `BMDlsDENchange` lumbar spine change from basline
+
 
 ```{r}
 out <- sim_denos(dose=c(10,60,210), dur=6)
@@ -60,10 +65,6 @@ out <- sim_denos(dose=c(10,60,210), dur=6)
 plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 
 ```
-
-
-- `DENCP` denosumab concentration
-- `BMDlsDENchange` lumbar spine change from basline
 
 
 <a name="scler"></a>
@@ -83,10 +84,6 @@ plot(out, SOSTCP + lsBMDsimSCLER ~ time, xlab="Time (hours)")
 Have `GFR` decline by a certain amount (`GFRdelta`) over a 
 certail period of time (`GFRtau`). 
 
-```{r}
-sim_2h() %>% plot
-```
-
 - `CaC` calcium concentration 
 - `PTHpm` parathyroid hormone 
 - `GFR` glomerular filtration rate
@@ -95,6 +92,10 @@ sim_2h() %>% plot
 
 All values are presented as fraction of the 
 base line value.
+
+```{r}
+sim_2h() %>% plot
+```
 
 
 <a name="scler2"></a>
@@ -159,8 +160,6 @@ you want to export the model and start making changes yourself.
 ```{r}
 file <- file.path(tempdir(),"my_model.cpp")
 file_location <- cabone_export(file)
-
-
 ```
 
 

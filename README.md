@@ -32,6 +32,9 @@ library(ggplot2)
 Simulate teriparatide data
 --------------------------
 
+-   `PTHpm` teriparatide concentration (pM)
+-   `CaC` calcium concentration (mM)
+
 ``` r
 out <- sim_teri(dose=c(20,40), dur=9)
 
@@ -40,12 +43,12 @@ plot(out)
 
 ![](inst/img/README-unnamed-chunk-4-1.png)
 
--   `PTHpm` teriparatide concentration (pM)
--   `CaC` calcium concentration (mM)
-
 <a name="denos"></a>
 
 ### Simulate denosumab data
+
+-   `DENCP` denosumab concentration
+-   `BMDlsDENchange` lumbar spine change from basline
 
 ``` r
 out <- sim_denos(dose=c(10,60,210), dur=6)
@@ -54,9 +57,6 @@ plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 ```
 
 ![](inst/img/README-unnamed-chunk-5-1.png)
-
--   `DENCP` denosumab concentration
--   `BMDlsDENchange` lumbar spine change from basline
 
 <a name="scler"></a>
 
@@ -78,12 +78,6 @@ Simulate secondary hyperparathyroidism
 
 Have `GFR` decline by a certain amount (`GFRdelta`) over a certail period of time (`GFRtau`).
 
-``` r
-sim_2h() %>% plot
-```
-
-![](inst/img/README-unnamed-chunk-7-1.png)
-
 -   `CaC` calcium concentration
 -   `PTHpm` parathyroid hormone
 -   `GFR` glomerular filtration rate
@@ -91,6 +85,12 @@ sim_2h() %>% plot
 -   `ECCPhos` extracellular phosphate
 
 All values are presented as fraction of the base line value.
+
+``` r
+sim_2h() %>% plot
+```
+
+![](inst/img/README-unnamed-chunk-7-1.png)
 
 <a name="scler2"></a>
 
