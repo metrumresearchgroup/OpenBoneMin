@@ -25,6 +25,7 @@ remotes::install_github("metrumresearchgroup/cabone")
 ## Usage
 ```{r,message=FALSE, warning=FALSE}
 library(cabone)
+library(ggplot2)
 ```
 
 
@@ -79,16 +80,40 @@ amt_teri(20)
 ## This is a function to re-create plots from Eudy, et al.(2015), CPT:PSP; Figure 3 ## 
 
 ```{r}
-
-create_scler_plots("P1NP")
-
+sims <- sim_scler_data()
 ```
+
+### `P1NP`
+```{r}
+ggplot(data=sims, aes(time,P1NPsim)) + 
+   geom_line() + facet_wrap(~label)
+```
+
+### `CTX`
+```{r}
+ggplot(data=sims, aes(time,CTXsim)) + 
+   geom_line() + facet_wrap(~label)
+```
+
+### Lumbar spine `BMD`
+```{r}
+ggplot(data=sims, aes(time,lsBMDsimSCLER)) + 
+   geom_line() + facet_wrap(~label)
+```
+
+### Total hip `BMD`
+```{r}
+ggplot(data=sims, aes(time,thBMDsimSCLER)) + 
+   geom_line() + facet_wrap(~label)
+```
+
+
 
 ## This is a function to simulate combination therapy (combination arm data from DATA study, Leder et al, 2014)## 
 ## (ACOP 2015 poster) ## 
 
 ```{r}
-sim_combo_arms()
+#sim_combo_arms()
 
 ```
 ## Export the model code

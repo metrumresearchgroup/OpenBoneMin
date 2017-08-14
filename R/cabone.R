@@ -93,7 +93,7 @@ sim_teri <- function(dose=20, ii=24, dur=27, delta=0.1, request="PTHpm,CaC") {
 ##' @export
 sim_scler <- function(dose=210, ii=1*24*28, dur=12, delta=24*28, 
                       request="SOSTCP, lsBMDsimSCLER, OBchange") {
-  mod <- cabone()
+  mod <- cabone_scler()
   cmtn <- mrgsolve::cmtn(mod,"SOSTSC")
   data <- expand.ev(amt=amt_scler(dose), ii=ii, addl=dur, cmt=cmtn)
   mrgsim(mod, data=data, delta=delta, end=(dur+1)*ii, Req=request)
@@ -161,7 +161,7 @@ sim_2h <- function(GFRdelta = 84, GFRtau = 10, delta=24,
 ##' 
 ##' @examples
 ##' 
-##' sims <- create_scler_plots()
+##' sims <- sim_scler_data()
 ##' 
 ##' \dontrun{
 ##'   require(ggplot2)
@@ -182,7 +182,7 @@ sim_2h <- function(GFRdelta = 84, GFRtau = 10, delta=24,
 ##' 
 ##' @export
 ##' 
-create_scler_plots<- function(){
+sim_scler_data <- function(){
   
   .Req <- c("P1NPsim","CTXsim","lsBMDsimSCLER","thBMDsimSCLER")
   .end <- 8787
@@ -192,19 +192,19 @@ create_scler_plots<- function(){
   
   ev1 <- ev(ID=1, amt=0, cmt="SOSTSC", ii=24*14, addl=25)
   out1 <- mrgsim(mod, ev1, end=.end, delta=.delta, Req=.Req)
-  dat1 <- as.data.frame(out1)  %>% mutate(label= "PBO Q2W")
+  dat1 <- as.data.frame(out1)  %>% dplyr::mutate(label= "PBO Q2W")
   
   ev2 <- ev(ID=2, amt=1244.555, cmt="SOSTSC", ii=24*28, addl=11)
   out2 <- mrgsim(mod, ev2, end=.end, delta=.delta, Req=.Req)
-  dat2 <- as.data.frame(out2) %>% mutate(label= "180 mg Q4W")
+  dat2 <- as.data.frame(out2) %>% dplyr::mutate(label= "180 mg Q4W")
   
   ev3 <- ev(ID=3, amt=1244.555, cmt="SOSTSC", ii=24*14, addl=25)
   out3 <- mrgsim(mod, ev3, end=.end, delta=.delta, Req=.Req)
-  dat3 <- as.data.frame(out3) %>% mutate(label= "180 mg Q2W")
+  dat3 <- as.data.frame(out3) %>% dplyr::mutate(label= "180 mg Q2W")
   
   ev4 <- ev(ID=4, amt=1866.83, cmt="SOSTSC", ii=24*14, addl=25)
   out4 <- mrgsim(mod, ev4, end=.end, delta=.delta, Req=.Req)
-  dat4 <- as.data.frame(out4) %>% mutate(label= "270 mg Q2W")
+  dat4 <- as.data.frame(out4) %>% dplyr::mutate(label= "270 mg Q2W")
   
   dplyr::bind_rows(dat1,dat2,dat3,dat4)
   
@@ -224,7 +224,6 @@ create_scler_plots<- function(){
 ##' }
 ##' 
 ##' @export
-
 sim_combo_arms <- function() {
   
   .mod <- cabone_scler()
