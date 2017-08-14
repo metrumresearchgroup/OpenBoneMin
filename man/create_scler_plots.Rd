@@ -4,11 +4,30 @@
 \alias{create_scler_plots}
 \title{This is a function to re-create plots from Eudy, et al.(2015), CPT:PSP; Figure 3 ##}
 \usage{
-create_scler_plots(endpoint)
-}
-\arguments{
-\item{endpoint}{## can be P1NP, CTX, lsBMD, or thBMD}
+create_scler_plots()
 }
 \description{
 This is a function to re-create plots from Eudy, et al.(2015), CPT:PSP; Figure 3 ##
+}
+\examples{
+
+sims <- create_scler_plots()
+
+\dontrun{
+  require(ggplot2)
+
+  ggplot(data=sims, aes(time,P1NPsim)) + 
+    geom_line() + facet_wrap(~label)
+
+  ggplot(data=sims, aes(time,CTXsim)) + 
+    geom_line() + facet_wrap(~label)
+  
+  ggplot(data=sims, aes(time,lsBMDsimSCLER)) + 
+    geom_line() + facet_wrap(~label)
+  
+  ggplot(data=sims, aes(time,thBMDsimSCLER)) + 
+    geom_line() + facet_wrap(~label)
+   
+}
+
 }

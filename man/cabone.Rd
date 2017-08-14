@@ -2,10 +2,13 @@
 % Please edit documentation in R/cabone.R
 \name{cabone}
 \alias{cabone}
+\alias{cabone_scler}
 \alias{cabone_export}
 \title{Calcium / bone homeostatis model.}
 \usage{
 cabone(...)
+
+cabone_scler(...)
 
 cabone_export(file = tempfile(fileext = ".cpp"), overwrite = FALSE)
 }

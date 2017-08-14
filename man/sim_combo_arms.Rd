@@ -6,9 +6,18 @@
 \usage{
 sim_combo_arms()
 }
-\value{
-plot of combination arms
-}
 \description{
 This is a function to simulate combination arms (ACOP 2015 poster) ##
+}
+\examples{
+
+\dontrun{
+  require(ggplot2)
+  
+  sims <- sim_combo_arms()
+  
+  ggplot(sims, aes(time,lsBMD,col=regimen)) + 
+    geom_line(lwd=1) + theme(legend.position="top")
+}
+
 }
