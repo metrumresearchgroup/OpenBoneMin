@@ -78,7 +78,7 @@ sims <- sim_scler_data()
 
 ``` r
 ggplot(data=sims, aes(time,P1NPsim,col=label)) + 
-   geom_line() + .colSet2()
+   geom_line(lwd=1) + .colSet2()
 ```
 
 ![](inst/img/README-unnamed-chunk-9-1.png)
@@ -87,7 +87,7 @@ ggplot(data=sims, aes(time,P1NPsim,col=label)) +
 
 ``` r
 ggplot(data=sims, aes(time,CTXsim,col=label)) + 
-   geom_line()  + .colSet2()
+   geom_line(lwd=1)  + .colSet2()
 ```
 
 ![](inst/img/README-unnamed-chunk-10-1.png)
@@ -96,7 +96,7 @@ ggplot(data=sims, aes(time,CTXsim,col=label)) +
 
 ``` r
 ggplot(data=sims, aes(time,lsBMDsimSCLER,col=label)) + 
-   geom_line() + .colSet2()
+   geom_line(lwd=1) + .colSet2()
 ```
 
 ![](inst/img/README-unnamed-chunk-11-1.png)
@@ -105,7 +105,7 @@ ggplot(data=sims, aes(time,lsBMDsimSCLER,col=label)) +
 
 ``` r
 ggplot(data=sims, aes(time,thBMDsimSCLER,col=label)) + 
-   geom_line() + .colSet2()
+   geom_line(lwd=1) + .colSet2()
 ```
 
 ![](inst/img/README-unnamed-chunk-12-1.png)
