@@ -16,7 +16,7 @@ sim_2h(GFRdelta = 84, GFRtau = 10, delta = 24,
 
 \item{request}{outputs to request}
 
-\item{dur}{number of doses to simulate}
+\item{cfb}{if \code{TRUE} results are returned as fractional change from basline}
 }
 \description{
 Simulate secondary hyperparathyroidism

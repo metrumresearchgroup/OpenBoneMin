@@ -14,6 +14,10 @@ cabone_export(file = tempfile(fileext = ".cpp"), overwrite = FALSE)
 }
 \arguments{
 \item{...}{passed to update}
+
+\item{file}{export file name}
+
+\item{overwrite}{passed to \code{\link{writeLines}}}
 }
 \description{
 Calcium / bone homeostatis model.

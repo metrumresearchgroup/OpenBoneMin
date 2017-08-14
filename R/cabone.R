@@ -4,10 +4,11 @@ camodel_scler <- "cabone2"
 
 ##' Plotting helper functions.
 ##' @param ... passed to \code{ggplot::scale_color_brewer}
+##' @rdname colSet1
 ##' @export
 .colSet1 <- function(...) ggplot2::scale_color_brewer(palette="Set1",...)
 ##' @export
-##' @rdname .colSet1 
+##' @rdname colSet1 
 .colSet2 <- function(...) ggplot2::scale_color_brewer(palette="Set2",...)
 
 ##' Get the locaton of model source code.
@@ -17,7 +18,8 @@ cablib <- function() system.file(package="cabone")
 
 ##' Calcium / bone homeostatis model.
 ##' 
-##' 
+##' @param file export file name
+##' @param overwrite passed to \code{\link{writeLines}}
 ##' @param ... passed to update
 ##' @export
 cabone <- function(...) {
@@ -96,7 +98,6 @@ sim_teri <- function(dose=20, ii=24, dur=27, delta=0.1, request="PTHpm,CaC") {
 ##' @param dur number of doses to simulate
 ##' @param delta simulation time grid
 ##' @param request outputs to request
-##' @param tscale factor for rescaling time in simulated output
 ##' 
 ##' @export
 sim_scler <- function(dose=210, ii=1*24*28, dur=12, delta=24*28, 
@@ -133,7 +134,7 @@ sim_denos <- function(dose=60, ii=6, dur=3, delta=4,
 ##' 
 ##' @param GFRdelta change in GFR from baseline value
 ##' @param GFRtau time interval in years over which GFR changes 
-##' @param dur number of doses to simulate
+##' @param cfb if \code{TRUE} results are returned as fractional change from basline
 ##' @param delta simulation time grid in hours
 ##' @param request outputs to request
 ##' 

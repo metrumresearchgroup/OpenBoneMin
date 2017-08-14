@@ -17,8 +17,6 @@ sim_scler(dose = 210, ii = 1 * 24 * 28, dur = 12, delta = 24 * 28,
 \item{delta}{simulation time grid}
 
 \item{request}{outputs to request}
-
-\item{tscale}{factor for rescaling time in simulated output}
 }
 \description{
 Simulate with sclerostin dosing

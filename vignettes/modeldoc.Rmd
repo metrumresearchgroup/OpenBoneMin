@@ -56,6 +56,12 @@ vignette: >
 - `UCA` - calcium in the urine (pmol)
 
 
+# Use
+```{r}
+library(cabone)
+mod <- cabone()
+mod
+```
 
 
 
