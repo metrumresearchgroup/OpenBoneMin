@@ -103,7 +103,7 @@ Bone markers and `BMD` after sclerostin monoclonal antibody
 sims <- sim_scler_data()
 ```
 
-### `P1NP` procollagen type 1 N propeptide
+### Procollagen type 1 N propeptide (`P1NP`)
 
 ``` r
 ggplot(data=sims, aes(time,P1NPsim,col=label)) + 
@@ -112,7 +112,7 @@ ggplot(data=sims, aes(time,P1NPsim,col=label)) +
 
 ![](inst/img/README-unnamed-chunk-9-1.png)
 
-### `CTX` C-terminal telopeptide
+### C-terminal telopeptide (`CTX`)
 
 ``` r
 ggplot(data=sims, aes(time,CTXsim,col=label)) + 

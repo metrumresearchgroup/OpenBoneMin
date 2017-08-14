@@ -63,7 +63,6 @@ plot(out)
 out <- sim_denos(dose=c(10,60,210), dur=6)
 
 plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
-
 ```
 
 
@@ -108,13 +107,13 @@ sim_2h() %>% plot
 sims <- sim_scler_data()
 ```
 
-### `P1NP` procollagen type 1 N propeptide
+### Procollagen type 1 N propeptide (`P1NP`)
 ```{r}
 ggplot(data=sims, aes(time,P1NPsim,col=label)) + 
    geom_line(lwd=1) + .colSet2()
 ```
 
-### `CTX` C-terminal telopeptide
+###  C-terminal telopeptide (`CTX`)
 ```{r}
 ggplot(data=sims, aes(time,CTXsim,col=label)) + 
    geom_line(lwd=1)  + .colSet2()
