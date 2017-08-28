@@ -11,6 +11,7 @@ LICENSE: GPL >=2
 PARAMETERS: 
   PTHkin: 
     about: [PTH production rate, unit]
+    paper: 14
   CtriolPTgam:
     about: calcitriol effect on PTH
   TERIKA:
@@ -19,6 +20,7 @@ PARAMETERS:
 COMPARTMENTS: 
   AOH: 
     about: [not really sure, pmol]
+    paper: 2
   B: 
     about: [circulting calcitriol, pmol]
   BCL2: 
