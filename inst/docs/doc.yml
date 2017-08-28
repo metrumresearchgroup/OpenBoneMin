@@ -13,6 +13,8 @@ PARAMETERS:
     about: [PTH production rate, unit]
   CtriolPTgam:
     about: calcitriol effect on PTH
+  TERIKA:
+    about: [teriparatide absorption rate constant, 1/hr]
 
 COMPARTMENTS: 
   AOH: 
@@ -33,4 +35,5 @@ COMPARTMENTS:
     about: [denosumab PK peripheral compartment, mg]
   DENSC: 
     about: [denosumab subcutaneous dosing compartment, mg]
+  
 
