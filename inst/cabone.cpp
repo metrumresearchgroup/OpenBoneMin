@@ -1,5 +1,9 @@
 [PROB]
   
+[PARAM] @yml
+
+
+
   //* URL: svn+ssh://mc1.metrumrg.com/common/repo/svn-proj-MI-CaBone-development/workinprogress/script/stable_model.cpp */
   //* Repository Root: svn+ssh://mc1.metrumrg.com/common/repo/svn-proj-MI-CaBone-development */
   //* Repository UUID: 18a99bec-3f78-43e9-9f4c-9c5f5529cddc */
