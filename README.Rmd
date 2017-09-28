@@ -24,9 +24,7 @@ remotes::install_github("metrumresearchgroup/cabone")
 
 - [Simulate teriparatide data](#teri)
 - [Simulate denosumab data](#denos)
-- [Simulate sclerostin mAb data](#scler)
-- [Simulate secondary hyperparathyroidism](#hyper)
-- [Simulate bone markers after sclerostin mAb](#scler2)
+
 
 
 ```{r,message=FALSE, warning=FALSE}
@@ -63,83 +61,6 @@ out <- sim_denos(dose=c(10,60,210), dur=6)
 plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 ```
 
-
-<a name="scler"></a>
-
-## Simulate sclerostin mAb and sclerostin data 
-
-- `SOSTCP` sclerostin mAb concentration
-- `lsBMDsimSCLER` lumbar spine bone mineral density (`BMD`)
-
-```{r}
-out <- sim_scler(dose=c(70,210,350), dur=12)
-
-plot(out, SOSTCP + lsBMDsimSCLER ~ time, xlab="Time (hours)")
-
-```
-
-<a name="hyper"></a>
-
-## Simulate secondary hyperparathyroidism
-
-Have `GFR` decline by a certain amount (`GFRdelta`) over a 
-certail period of time (`GFRtau`). 
-
-- `CaC` calcium concentration 
-- `PTHpm` parathyroid hormone 
-- `GFR` glomerular filtration rate
-- `OC` osteoclasts
-- `ECCPhos` extracellular phosphate
-
-All values are presented as fraction of the 
-base line value.
-
-```{r}
-sim_2h() %>% plot
-```
-
-
-<a name="scler2"></a>
-
-## Bone markers and `BMD` after sclerostin monoclonal antibody
-
-- Re-create simulated data in Eudy, et al. (2015) CPT:PSP, figure 3
-- Outcomes (`P1NP`, `CTX`, `LS-BMD`, `TH-BMD`) are presented as percent change from baseline
-
-```{r}
-sims <- sim_scler_data()
-```
-
-### Procollagen type 1 N propeptide (`P1NP`)
-```{r}
-ggplot(data=sims, aes(time,P1NPsim,col=label)) + 
-   geom_line(lwd=1) + .colSet2()
-```
-
-###  C-terminal telopeptide (`CTX`)
-```{r}
-ggplot(data=sims, aes(time,CTXsim,col=label)) + 
-   geom_line(lwd=1)  + .colSet2()
-```
-
-### Lumbar spine `BMD`
-```{r}
-ggplot(data=sims, aes(time,lsBMDsimSCLER,col=label)) + 
-   geom_line(lwd=1) + .colSet2()
-```
-
-### Total hip `BMD`
-```{r}
-ggplot(data=sims, aes(time,thBMDsimSCLER,col=label)) + 
-   geom_line(lwd=1) + .colSet2()
-```
-
-
-## Teriparatide + denosumab combination therapy
-
-```{r,eval=FALSE}
-sims <- sim_combo_arms()
-```
 
 
 # Some helper functions

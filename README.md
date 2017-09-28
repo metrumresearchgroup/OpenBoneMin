@@ -21,9 +21,6 @@ Usage
 
 -   [Simulate teriparatide data](#teri)
 -   [Simulate denosumab data](#denos)
--   [Simulate sclerostin mAb data](#scler)
--   [Simulate secondary hyperparathyroidism](#hyper)
--   [Simulate bone markers after sclerostin mAb](#scler2)
 
 ``` r
 library(cabone)
@@ -60,98 +57,6 @@ plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 ```
 
 ![](inst/img/README-unnamed-chunk-5-1.png)
-
-<a name="scler"></a>
-
-Simulate sclerostin mAb and sclerostin data
--------------------------------------------
-
--   `SOSTCP` sclerostin mAb concentration
--   `lsBMDsimSCLER` lumbar spine bone mineral density (`BMD`)
-
-``` r
-out <- sim_scler(dose=c(70,210,350), dur=12)
-
-plot(out, SOSTCP + lsBMDsimSCLER ~ time, xlab="Time (hours)")
-```
-
-![](inst/img/README-unnamed-chunk-6-1.png)
-
-<a name="hyper"></a>
-
-Simulate secondary hyperparathyroidism
---------------------------------------
-
-Have `GFR` decline by a certain amount (`GFRdelta`) over a certail period of time (`GFRtau`).
-
--   `CaC` calcium concentration
--   `PTHpm` parathyroid hormone
--   `GFR` glomerular filtration rate
--   `OC` osteoclasts
--   `ECCPhos` extracellular phosphate
-
-All values are presented as fraction of the base line value.
-
-``` r
-sim_2h() %>% plot
-```
-
-![](inst/img/README-unnamed-chunk-7-1.png)
-
-<a name="scler2"></a>
-
-Bone markers and `BMD` after sclerostin monoclonal antibody
------------------------------------------------------------
-
--   Re-create simulated data in Eudy, et al. (2015) CPT:PSP, figure 3
--   Outcomes (`P1NP`, `CTX`, `LS-BMD`, `TH-BMD`) are presented as percent change from baseline
-
-``` r
-sims <- sim_scler_data()
-```
-
-### Procollagen type 1 N propeptide (`P1NP`)
-
-``` r
-ggplot(data=sims, aes(time,P1NPsim,col=label)) + 
-   geom_line(lwd=1) + .colSet2()
-```
-
-![](inst/img/README-unnamed-chunk-9-1.png)
-
-### C-terminal telopeptide (`CTX`)
-
-``` r
-ggplot(data=sims, aes(time,CTXsim,col=label)) + 
-   geom_line(lwd=1)  + .colSet2()
-```
-
-![](inst/img/README-unnamed-chunk-10-1.png)
-
-### Lumbar spine `BMD`
-
-``` r
-ggplot(data=sims, aes(time,lsBMDsimSCLER,col=label)) + 
-   geom_line(lwd=1) + .colSet2()
-```
-
-![](inst/img/README-unnamed-chunk-11-1.png)
-
-### Total hip `BMD`
-
-``` r
-ggplot(data=sims, aes(time,thBMDsimSCLER,col=label)) + 
-   geom_line(lwd=1) + .colSet2()
-```
-
-![](inst/img/README-unnamed-chunk-12-1.png)
-
-Teriparatide + denosumab combination therapy
---------------------------------------------
-
-``` r
-sims <- sim_combo_arms()
-```
 
 Some helper functions
 =====================
