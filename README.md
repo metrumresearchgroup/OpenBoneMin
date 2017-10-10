@@ -2,7 +2,7 @@
 About
 =====
 
-A multiscale systems model of bone function, remodeling and health.
+A multiscale systems model of bone health and mineral homeostasis.
 
 Documentation
 =============
@@ -13,7 +13,7 @@ Installation
 ============
 
 ``` r
-remotes::install_github("metrumresearchgroup/cabone")
+remotes::install_github("metrumresearchgroup/OpenBoneMin")
 ```
 
 Usage
@@ -23,7 +23,7 @@ Usage
 -   [Simulate denosumab data](#denos)
 
 ``` r
-library(cabone)
+library(OpenBoneMin)
 library(ggplot2)
 ```
 
@@ -79,5 +79,5 @@ It's a little hard to see what's happening here. But basically, this grabs the m
 
 ``` r
 file <- file.path(tempdir(),"my_model.cpp")
-file_location <- cabone_export(file)
+file_location <- BoneMin_export(file)
 ```

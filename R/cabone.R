@@ -1,5 +1,5 @@
 
-camodel <- "cabone"
+camodel <- "OpenBoneMin"
 
 ##' Plotting helper functions.
 ##' @param ... passed to \code{ggplot::scale_color_brewer}
