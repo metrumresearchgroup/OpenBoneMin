@@ -13,7 +13,7 @@ camodel <- "cabone"
 ##' Get the locaton of model source code.
 ##' 
 ##' @export
-cablib <- function() system.file(package="OpenBoneMin")
+BoneMinLib <- function() system.file(package="OpenBoneMin")
 
 ##' Calcium / bone homeostatis model.
 ##' 
@@ -21,14 +21,14 @@ cablib <- function() system.file(package="OpenBoneMin")
 ##' @param overwrite passed to \code{\link{writeLines}}
 ##' @param ... passed to update
 ##' @export
-cabone <- function(...) {
-  update(mread_cache(camodel,cablib()),...)
+BoneMin <- function(...) {
+  update(mread_cache(camodel,BoneMinLib()),...)
 }
 
 
-##' @rdname cabone
+##' @rdname BoneMin
 ##' @export
-cabone_export <- function(file=tempfile(fileext=".cpp"), overwrite=FALSE) {
+BoneMin_export <- function(file=tempfile(fileext=".cpp"), overwrite=FALSE) {
   if(is.null(file)) {
     stop("please provide a file name to write model code.", call.=FALSE)
   }
@@ -39,7 +39,7 @@ cabone_export <- function(file=tempfile(fileext=".cpp"), overwrite=FALSE) {
   if(file.exists(file) & !overwrite) {
     stop("output file already exists.", call.=FALSE)
   }
-  mod <- mread(camodel,cablib(),compile=FALSE)
+  mod <- mread(camodel,BoneMinLib(),compile=FALSE)
   message("Writing model code to file ", file)
   writeLines(mod@code,file)
   return(file)
@@ -72,7 +72,7 @@ amt_denos <- function(x) x*1
 ##' 
 ##' @export
 sim_teri <- function(dose=20, ii=24, dur=27, delta=0.1, request="PTHpm,CaC") {
-  mod <- cabone()
+  mod <- BoneMin()
   cmtn <- mrgsolve::cmtn(mod,"TERISC")
   data <- expand.ev(amt=amt_teri(dose), ii=ii, addl=dur, cmt=cmtn)
   mrgsim(mod, data=data, delta=delta, end=(dur+1)*ii, Req=request)
@@ -93,10 +93,10 @@ sim_teri <- function(dose=20, ii=24, dur=27, delta=0.1, request="PTHpm,CaC") {
 sim_denos <- function(dose=60, ii=6, dur=3, delta=4, 
                       request="DENCP,DENMOL,BMDlsDENchange", 
                       tscale=1/(24*28)) {
-  mod <- cabone()
+  mod <- BoneMin()
   cmtn <- mrgsolve::cmtn(mod,"DENSC")
   ii <- ii*28*24
-  data <- expand.ev(amt=amt_denos(dose), ii=ii, addl=dur-1, cmt=cmtn)
+  data <- expand.ev(amt = amt_denos(dose), ii=ii, addl=dur-1, cmt=cmtn)
   mrgsim(mod, data=data, delta=delta, end=(dur+1)*ii,
          tscale=tscale,
          Req=request)
