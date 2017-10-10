@@ -1,10 +1,10 @@
 ---
-title: "CaBone Model Documentation"
+title: "OpenBoneMin Model Documentation"
 author: "Metrum Research Group, LLC"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{cabone}
+  %\VignetteIndexEntry{OpenBoneMin}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -58,8 +58,8 @@ vignette: >
 
 # Use
 ```{r}
-library(cabone)
-mod <- cabone()
+library(OpenBoneMin)
+mod <- BoneMin()
 mod
 ```
 

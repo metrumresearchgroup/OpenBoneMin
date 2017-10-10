@@ -10,14 +10,14 @@ knitr::opts_chunk$set(fig.path="inst/img/README-", comment='.', message=FALSE)
 ```
 
 # About
-A multiscale systems model of bone function, remodeling and health. 
+A multiscale systems model of bone health and mineral homeostasis. 
 
 # Documentation
 - Documentation [here](vignettes/modeldoc.Rmd)
 
 # Installation
 ```{r,eval=FALSE}
-remotes::install_github("metrumresearchgroup/cabone")
+remotes::install_github("metrumresearchgroup/OpenBoneMin")
 ```
 
 # Usage
@@ -28,7 +28,7 @@ remotes::install_github("metrumresearchgroup/cabone")
 
 
 ```{r,message=FALSE, warning=FALSE}
-library(cabone)
+library(OpenBoneMin)
 library(ggplot2)
 ```
 
@@ -82,7 +82,7 @@ you want to export the model and start making changes yourself.
 
 ```{r}
 file <- file.path(tempdir(),"my_model.cpp")
-file_location <- cabone_export(file)
+file_location <- BoneMin_export(file)
 ```
 
 
