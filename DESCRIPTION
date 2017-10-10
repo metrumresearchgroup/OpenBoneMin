@@ -1,6 +1,6 @@
-Package: cabone
+Package: OpenBoneMin
 Type: Package
-Title: Simulate from MetrumRG bone and mineral model
+Title: Simulate from MetrumRG bone and mineral health model
 Version: 0.0.1
 Date: 2017-07-27
 Authors@R: c(person("Matthew Riggs",role=c("aut"),email="mattr@metrumrg.com"),
@@ -8,7 +8,7 @@ Authors@R: c(person("Matthew Riggs",role=c("aut"),email="mattr@metrumrg.com"),
              person("Rena Eudy-Byrne",role=c("ctb"),email="renae@metrumrg.com"),
              person("Timothy Knab",role=c("ctb"),email="knabt@metrumrg.com"))
 Maintainer: Kyle Baron <kyleb@metrumrg.com>
-Description: Multiscale model for mineral homeostasis and bone health.
+Description: Open source, multiscale model for mineral homeostasis and bone health.
 License: GPL (>=3)
 Depends:
   mrgsolve

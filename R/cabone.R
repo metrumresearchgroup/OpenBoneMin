@@ -1,6 +1,5 @@
 
 camodel <- "cabone"
-camodel_scler <- "cabone2"
 
 ##' Plotting helper functions.
 ##' @param ... passed to \code{ggplot::scale_color_brewer}
@@ -14,7 +13,7 @@ camodel_scler <- "cabone2"
 ##' Get the locaton of model source code.
 ##' 
 ##' @export
-cablib <- function() system.file(package="cabone")
+cablib <- function() system.file(package="OpenBoneMin")
 
 ##' Calcium / bone homeostatis model.
 ##' 
