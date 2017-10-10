@@ -1,20 +1,17 @@
 [PROB]
-  
-[PARAM] 
 
 
-
-  //* URL: svn+ssh://mc1.metrumrg.com/common/repo/svn-proj-MI-CaBone-development/workinprogress/script/stable_model.cpp */
-  //* Repository Root: svn+ssh://mc1.metrumrg.com/common/repo/svn-proj-MI-CaBone-development */
-  //* Repository UUID: 18a99bec-3f78-43e9-9f4c-9c5f5529cddc */
-  //* Revision: 554 */
-  //* Node Kind: file */
-  //* Schedule: normal */
-  //* Last Changed Author: kyleb */
-  //* Last Changed Rev: 554 */
-  //* Last Changed Date: 2013-06-20 18:58:33 +0000 (Thu, 20 Jun 2013) */
-  //* Text Last Updated: 2013-06-20 19:03:31 +0000 (Thu, 20 Jun 2013) */
-  //* Checksum: 3aa54f574a1a48cdb64fbec814f71451 */
+// URL: svn+ssh://mc1.metrumrg.com/common/repo/svn-proj-MI-CaBone-development/workinprogress/script/stable_model.cpp */
+// Repository Root: svn+ssh://mc1.metrumrg.com/common/repo/svn-proj-MI-CaBone-development */
+// Repository UUID: 18a99bec-3f78-43e9-9f4c-9c5f5529cddc */
+// Revision: 554 */
+// Node Kind: file */
+// Schedule: normal */
+// Last Changed Author: kyleb */
+// Last Changed Rev: 554 */
+// Last Changed Date: 2013-06-20 18:58:33 +0000 (Thu, 20 Jun 2013) */
+// Text Last Updated: 2013-06-20 19:03:31 +0000 (Thu, 20 Jun 2013) */
+// Checksum: 3aa54f574a1a48cdb64fbec814f71451 */
   
   
   // 08-12-15 KTB
