@@ -12,8 +12,22 @@ Documentation
 Installation
 ============
 
+Installation of `OpenBoneMin` requires the `devtools` package
+
 ``` r
-remotes::install_github("metrumresearchgroup/OpenBoneMin")
+if(!require("devtools")) install.packages("devtools")
+```
+
+Use the `install_github` function inside `devtools` to install the `OpenBoneMin` package from GitHub to your local machine
+
+``` r
+devtools::install_github("metrumresearchgroup/OpenBoneMin")
+```
+
+You can test the installation by trying an example
+
+``` r
+example("sim_teri", package = "OpenBoneMin")
 ```
 
 Usage
@@ -41,7 +55,7 @@ out <- sim_teri(dose=c(20,40), dur=9)
 plot(out)
 ```
 
-![](inst/img/README-unnamed-chunk-4-1.png)
+![](inst/img/README-unnamed-chunk-6-1.png)
 
 <a name="denos"></a>
 
@@ -56,7 +70,7 @@ out <- sim_denos(dose=c(10,60,210), dur=6)
 plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 ```
 
-![](inst/img/README-unnamed-chunk-5-1.png)
+![](inst/img/README-unnamed-chunk-7-1.png)
 
 Some helper functions
 =====================

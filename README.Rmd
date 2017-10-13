@@ -16,9 +16,25 @@ A multiscale systems model of bone health and mineral homeostasis.
 - Documentation [here](vignettes/modeldoc.Rmd)
 
 # Installation
-```{r,eval=FALSE}
-remotes::install_github("metrumresearchgroup/OpenBoneMin")
+
+Installation of `OpenBoneMin` requires the `devtools` package
+```{r, eval = FALSE}
+if(!require("devtools")) install.packages("devtools")
 ```
+
+
+Use the `install_github` function inside `devtools` to install the `OpenBoneMin`
+package from GitHub to your local machine
+
+```{r,eval=FALSE}
+devtools::install_github("metrumresearchgroup/OpenBoneMin")
+```
+
+You can test the installation by trying an example
+```{r, eval = FALSE}
+example("sim_teri", package = "OpenBoneMin")
+```
+
 
 # Usage
 
