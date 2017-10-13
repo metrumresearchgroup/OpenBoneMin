@@ -21,3 +21,12 @@ sim_teri(dose = 20, ii = 24, dur = 27, delta = 0.1,
 \description{
 Simulate with teriparatide dosing
 }
+\examples{
+
+out <- sim_teri(dose=c(20,40), dur=9)
+
+head(out)
+
+plot(out)
+
+}

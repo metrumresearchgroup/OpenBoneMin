@@ -15,3 +15,8 @@ teriparatide dose in
 \description{
 Convert teriparatide doses
 }
+\examples{
+
+amt_teri(20)
+
+}

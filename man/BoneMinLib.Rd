@@ -9,3 +9,8 @@ BoneMinLib()
 \description{
 Get the locaton of model source code.
 }
+\examples{
+
+BoneMinLib()
+
+}

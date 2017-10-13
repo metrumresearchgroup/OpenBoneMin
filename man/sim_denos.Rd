@@ -23,3 +23,10 @@ sim_denos(dose = 60, ii = 6, dur = 3, delta = 4,
 \description{
 Simulate with denosumab dosing
 }
+\examples{
+
+out <- sim_denos(dose=c(10,60,210), dur=6)
+
+plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
+
+}

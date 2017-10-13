@@ -12,6 +12,10 @@ camodel <- "OpenBoneMin"
 
 ##' Get the locaton of model source code.
 ##' 
+##' @examples
+##' 
+##' BoneMinLib()
+##' 
 ##' @export
 BoneMinLib <- function() system.file(package="OpenBoneMin")
 
@@ -20,6 +24,13 @@ BoneMinLib <- function() system.file(package="OpenBoneMin")
 ##' @param file export file name
 ##' @param overwrite passed to \code{\link{writeLines}}
 ##' @param ... passed to update
+##' 
+##' @examples
+##' 
+##' mod <- BoneMin(end = 365, delta = 0.5)
+##' 
+##' BoneMin_export()
+##' 
 ##' @export
 BoneMin <- function(...) {
   update(mread_cache(camodel,BoneMinLib()),...)
@@ -50,6 +61,11 @@ BoneMin_export <- function(file=tempfile(fileext=".cpp"), overwrite=FALSE) {
 ##' @param x teriparatide dose in micrograms
 ##' 
 ##' @return teriparatide dose in 
+##' 
+##' @examples
+##' 
+##' amt_teri(20)
+##' 
 ##' @export
 amt_teri <- function(x) x*1E6/4117.8
 
@@ -70,6 +86,14 @@ amt_denos <- function(x) x*1
 ##' @param delta simulation time grid
 ##' @param request outputs to request
 ##' 
+##' @examples
+##' 
+##' out <- sim_teri(dose=c(20,40), dur=9)
+##' 
+##' head(out)
+##' 
+##' plot(out)
+##' 
 ##' @export
 sim_teri <- function(dose=20, ii=24, dur=27, delta=0.1, request="PTHpm,CaC") {
   mod <- BoneMin()
@@ -88,6 +112,12 @@ sim_teri <- function(dose=20, ii=24, dur=27, delta=0.1, request="PTHpm,CaC") {
 ##' @param delta simulation time grid in hours
 ##' @param request outputs to request
 ##' @param tscale factor for rescaling time in simulated output
+##' 
+##' @examples
+##' 
+##' out <- sim_denos(dose=c(10,60,210), dur=6)
+##' 
+##' plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 ##' 
 ##' @export
 sim_denos <- function(dose=60, ii=6, dur=3, delta=4, 

@@ -19,3 +19,10 @@ BoneMin_export(file = tempfile(fileext = ".cpp"), overwrite = FALSE)
 \description{
 Calcium / bone homeostatis model.
 }
+\examples{
+
+mod <- BoneMin(end = 365, delta = 0.5)
+
+BoneMin_export()
+
+}
