@@ -12,7 +12,7 @@ vignette: >
 
 # Model compartments
 
-- `AOH`
+- `AOH` - 1-alpha-hydroxylase
 - `B` - circulating calcitriol (pmol)
 - `BCL2`- Bcl-2
 - `BMDfn` - femoral neck bone mineral density
