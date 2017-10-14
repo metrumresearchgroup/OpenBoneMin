@@ -10,7 +10,8 @@ knitr::opts_chunk$set(fig.path="inst/img/README-", comment='.', message=FALSE)
 ```
 
 # About
-A multiscale systems model of bone health and mineral homeostasis. 
+A multiscale systems model of bone health and mineral homeostasis.  Please 
+see the [wiki page](https://github.com/metrumresearchgroup/OpenBoneMin/wiki) for more information on this project.
 
 # Documentation
 - Documentation [here](vignettes/modeldoc.Rmd)
