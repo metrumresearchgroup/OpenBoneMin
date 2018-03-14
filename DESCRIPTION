@@ -13,11 +13,9 @@ License: GPL (>=3)
 Depends:
   mrgsolve
 RoxygenNote: 6.0.1
-Imports: 
+Imports:
   dplyr
-Remotes:
-  mrgsolve/mrgsolvetk
-Suggests: 
+Suggests:
     knitr,
     rmarkdown,
     ggplot2
