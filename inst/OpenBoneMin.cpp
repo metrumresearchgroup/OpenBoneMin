@@ -631,7 +631,7 @@ $INIT
   //* Estrogen piece*/
   //*******************/
   
-  double AGE = ageENTER + T_0;
+  double AGE = ageENTER + SOLVERTIME;
   double ageONSET = ageDONE-menoDUR;
   
   if(AGE < ageONSET) kinEST = koutEST * pow((AGE/ageENTER),ageGAM);
