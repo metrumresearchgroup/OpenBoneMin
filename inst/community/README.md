@@ -5,7 +5,7 @@ This folder contains community contributions to the OpenBoneMin repo.
 
 ## Contents
 
-### [lumped](lumped)
+### [lump](lump)
 
 Supplemenary code from:
 
