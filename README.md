@@ -4,6 +4,8 @@ About
 
 A multiscale systems model of bone health and mineral homeostasis. Please see the [wiki page](https://github.com/metrumresearchgroup/OpenBoneMin/wiki) for more information on this project.
 
+Community contributions to this project are included [here](inst/community).
+
 Documentation
 =============
 
