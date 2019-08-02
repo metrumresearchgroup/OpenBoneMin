@@ -7,7 +7,7 @@ This folder contains community contributions to the OpenBoneMin repo.
 
 ### [lump](lump)
 
-Supplemenary code from:
+Supplementary code from:
 
 Hasegawa C, Duffull SB. Automated Scale Reduction of Nonlinear QSP Models With
 an Illustrative Application to a Bone Biology System. CPT Pharmacometrics Syst
