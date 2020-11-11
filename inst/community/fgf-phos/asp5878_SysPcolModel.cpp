@@ -1,8 +1,5 @@
 $PROB
   
-  //* Working Copy Root Path: /Users/mattr/data/project/CaBoneRepo/svn-proj-MI-CaBone-development
-  //* URL: svn+ssh://mc1.metrumrg.com/common/repo/svn-proj-MI-CaBone-development/public/script/model/public_model.cpp
-  //* Repository Root: svn+ssh://mc1.metrumrg.com/common/repo/svn-proj-MI-CaBone-development
   //* Repository UUID: 18a99bec-3f78-43e9-9f4c-9c5f5529cddc
   //* Revision: 602
   //* Last Changed Rev: 596
