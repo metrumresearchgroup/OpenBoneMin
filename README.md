@@ -72,9 +72,6 @@ out <- sim_denos(dose=c(10,60,210), dur=6)
 plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
 ```
 
-    . Warning: In subset.data.frame(as.data.frame(x), ...) :
-    .  extra argument 'xlab' will be disregarded
-
 ![](inst/img/README-unnamed-chunk-7-1.png)<!-- -->
 
 # Some helper functions

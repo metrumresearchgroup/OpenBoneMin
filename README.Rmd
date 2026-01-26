@@ -59,7 +59,7 @@ library(ggplot2)
 - `PTHpm` teriparatide concentration (pM)
 - `CaC` calcium concentration (mM)
 
-```{r}
+```{r, fig.width = 9}
 out <- sim_teri(dose=c(20,40), dur=9)
 
 plot(out)
@@ -74,7 +74,7 @@ plot(out)
 - `BMDlsDENchange` lumbar spine change from basline
 
 
-```{r}
+```{r, fig.width = 9, warning = FALSE}
 out <- sim_denos(dose=c(10,60,210), dur=6)
 
 plot(out, log(DENCP) + BMDlsDENchange ~ time, xlab="Time (months)")
